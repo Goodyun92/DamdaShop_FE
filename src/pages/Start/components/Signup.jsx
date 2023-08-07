@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function Signup() {
+const Signup = () => {
     const navigate = useNavigate();
-    const [credentials, setCredentials] = useState({ email: '', password: '' });
+    const [credentials, setCredentials] = useState({ id: '', password: '' });
 
     const handleChange = (event) => {
         setCredentials({ ...credentials, [event.target.name]: event.target.value });
@@ -14,11 +14,11 @@ function Signup() {
         event.preventDefault();
 
         try {
-            // API endpoint에 따라 변경해주세요.
+            // API endpoint
             const res = await axios.post('http://localhost:5000/signup', credentials);
 
             if (res.data.success) {
-                // 회원가입 성공 후 redirect 경로를 변경해주세요.
+                // 회원가입 성공 후 redirect 경로
                 navigate('/login');
             } else {
                 alert(res.data.message);
@@ -31,16 +31,14 @@ function Signup() {
     return (
         <form onSubmit={handleSubmit}>
             <label>
-                Email:
-                <input type="email" name="email" onChange={handleChange} value={credentials.email} required />
+                <input type="id" name="id" onChange={handleChange} value={credentials.id} required />
             </label>
             <label>
-                Password:
                 <input type="password" name="password" onChange={handleChange} value={credentials.password} required />
             </label>
             <button type="submit">회원가입</button>
         </form>
     );
-}
+};
 
 export default Signup;

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login';
 import Signup from './components/Signup';
 
-function Start() {
+const Start = () => {
     return (
         <Router>
             <Routes>
@@ -13,6 +13,6 @@ function Start() {
             </Routes>
         </Router>
     );
-}
+};
 
 export default Start;

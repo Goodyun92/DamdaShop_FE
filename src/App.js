@@ -1,10 +1,10 @@
 import './App.css';
-import Entrypoint from './pages/Start';
+import Start from './pages/Start';
 
 function App() {
     return (
         <div>
-            <Entrypoint />
+            <Start />
         </div>
     );
 }
