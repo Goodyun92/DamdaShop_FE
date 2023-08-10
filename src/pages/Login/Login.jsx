@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import accountState from '../../store/atoms';
 
 const Container = styled.div`
     width: 375px;
@@ -14,6 +16,7 @@ const Container = styled.div`
     line-height: 26px;
     letter-spacing: -0.30000001192092896px;
     padding: 10px 10px 0px 10px;
+    background-color: white;
 `;
 
 const T1 = styled.div`
@@ -52,6 +55,14 @@ const Input = styled.input`
     text-align: left;
     outline: none;
     border: none;
+`;
+
+const LoginFail = styled.div`
+    color: red;
+    font-family: 'Pretendard';
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
 `;
 
 const ButtonLogin = styled.button`
@@ -94,21 +105,28 @@ const SignupR = styled.span`
 `;
 
 const ButtonSignup = styled.button`
-    width: 375px;
+    width: auto;
     height: 59px;
-    margin-top: 400px;
+    margin-top: 390px;
     padding: 20px 0px 20px 0px;
     background: #60996633;
     border: none;
     font-family: 'pretendard';
+    border-radius: 5px;
 `;
 
 const Login = () => {
     const navigate = useNavigate();
-    const [credentials, setCredentials] = useState({ id: '', password: '' });
+    const [account, setAccount] = useRecoilState(accountState);
+    const [credentials, setCredentials] = useState({
+        id: '',
+        password: '',
+    });
+    const [loginResult, setLoginResult] = useState(false);
 
-    const handleChange = (event) => {
-        setCredentials({ ...credentials, [event.target.name]: event.target.value });
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setCredentials((prevState) => ({ ...prevState, [name]: value }));
     };
 
     const handleSubmit = async (event) => {
@@ -119,10 +137,12 @@ const Login = () => {
             const res = await axios.post('http://localhost:5000/login', credentials);
 
             if (res.data.success) {
-                // 로그인 성공 후 redirect 경로
-                navigate('/');
+                setAccount({ username: res.data.username }); // Recoil 상태 업데이트
+                // 로그인 성공 후 mainHome으로
+                navigate('/mainHome');
             } else {
-                alert(res.data.message);
+                //alert(res.data.message);
+                setLoginResult(true);
             }
         } catch (error) {
             console.error(error);
@@ -141,7 +161,7 @@ const Login = () => {
                 <Label>
                     <Input
                         placeholder="아이디"
-                        type="id"
+                        type="text"
                         name="id"
                         onChange={handleChange}
                         value={credentials.id}
@@ -158,6 +178,7 @@ const Login = () => {
                         required
                     />
                 </Label>
+                <div>{loginResult ? <LoginFail>비밀번호가 틀렸습니다.다시 입력해 주실래요?</LoginFail> : <div />}</div>
                 <ButtonLogin type="submit">로그인</ButtonLogin>
                 <ButtonSignup type="button" onClick={handleSignup}>
                     <SignupL>계정이 없나요?</SignupL>
