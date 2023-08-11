@@ -5,9 +5,14 @@ import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import accountState from '../../store/atoms';
 
-const Container = styled.div`
+const C = styled.div`
     width: 375px;
     height: 812px;
+    display: flex;
+    flex-direction: column;
+`;
+
+const Container = styled.div`
     display: flex;
     flex-direction: column;
     font-family: 'pretendard';
@@ -15,12 +20,12 @@ const Container = styled.div`
     font-weight: 600;
     line-height: 26px;
     letter-spacing: -0.30000001192092896px;
-    padding: 10px 10px 0px 10px;
+    padding: 10px 20px 0px 20px;
     background-color: white;
 `;
 
 const T1 = styled.div`
-    margin-top: 118px;
+    margin-top: 30px;
 `;
 
 const T2 = styled.div`
@@ -44,6 +49,7 @@ const Label = styled.label`
     gap: 10px;
     color: #e0e0e0;
     border: 0.5px solid #e0e0e0;
+    margin-bottom: 10px;
 `;
 
 const Input = styled.input`
@@ -66,7 +72,7 @@ const LoginFail = styled.div`
 `;
 
 const ButtonLogin = styled.button`
-    margin-top: 15px;
+    margin-top: 5px;
     width: Fixed (333px);
     height: Fixed (41px);
     top: 322px;
@@ -107,12 +113,18 @@ const SignupR = styled.span`
 const ButtonSignup = styled.button`
     width: auto;
     height: 59px;
-    margin-top: 390px;
+    margin-top: 380px;
     padding: 20px 0px 20px 0px;
     background: #60996633;
     border: none;
     font-family: 'pretendard';
     border-radius: 5px;
+`;
+
+const Box = styled.div`
+    background: #60996633;
+    width: 375px;
+    height: 100px;
 `;
 
 const Login = () => {
@@ -154,38 +166,43 @@ const Login = () => {
     };
 
     return (
-        <Container>
-            <T1>안녕하세요!</T1>
-            <T2>아래 정보를 입력하여 로그인해주세요</T2>
-            <Form onSubmit={handleSubmit}>
-                <Label>
-                    <Input
-                        placeholder="아이디"
-                        type="text"
-                        name="id"
-                        onChange={handleChange}
-                        value={credentials.id}
-                        required
-                    />
-                </Label>
-                <Label>
-                    <Input
-                        placeholder="비밀번호"
-                        type="password"
-                        name="password"
-                        onChange={handleChange}
-                        value={credentials.password}
-                        required
-                    />
-                </Label>
-                <div>{loginResult ? <LoginFail>비밀번호가 틀렸습니다.다시 입력해 주실래요?</LoginFail> : <div />}</div>
-                <ButtonLogin type="submit">로그인</ButtonLogin>
-                <ButtonSignup type="button" onClick={handleSignup}>
-                    <SignupL>계정이 없나요?</SignupL>
-                    <SignupR>회원가입</SignupR>
-                </ButtonSignup>
-            </Form>
-        </Container>
+        <C>
+            <Container>
+                <T1>안녕하세요!</T1>
+                <T2>아래 정보를 입력하여 로그인해주세요</T2>
+                <Form onSubmit={handleSubmit}>
+                    <Label>
+                        <Input
+                            placeholder="아이디"
+                            type="text"
+                            name="id"
+                            onChange={handleChange}
+                            value={credentials.id}
+                            required
+                        />
+                    </Label>
+                    <Label>
+                        <Input
+                            placeholder="비밀번호"
+                            type="password"
+                            name="password"
+                            onChange={handleChange}
+                            value={credentials.password}
+                            required
+                        />
+                    </Label>
+                    <div>
+                        {loginResult ? <LoginFail>비밀번호가 틀렸습니다.다시 입력해 주실래요?</LoginFail> : <div />}
+                    </div>
+                    <ButtonLogin type="submit">로그인</ButtonLogin>
+                </Form>
+            </Container>
+            <ButtonSignup type="button" onClick={handleSignup}>
+                <SignupL>계정이 없나요?</SignupL>
+                <SignupR>회원가입</SignupR>
+            </ButtonSignup>
+            <Box />
+        </C>
     );
 };
 

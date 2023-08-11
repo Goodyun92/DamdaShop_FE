@@ -4,6 +4,7 @@ import MainHome from './pages/MainHome';
 import Search from './pages/Search';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
+import AfterSignup from './pages/Signup/AfterSignup';
 import ShowProducts from './pages/ShowProducts';
 import Frame from './components/Frame';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -29,6 +30,7 @@ function App() {
                             <Route path="/search" element={<Search />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/signup" element={<Signup />} />
+                            <Route path="/afterSignup" element={<AfterSignup />} />
                             <Route path="/showProducts" element={<ShowProducts />} />
                         </Routes>
                     </Router>
