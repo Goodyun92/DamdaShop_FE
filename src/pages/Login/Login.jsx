@@ -6,8 +6,8 @@ import { useRecoilState } from 'recoil';
 import accountState from '../../store/atoms';
 
 const C = styled.div`
-    width: 375px;
-    height: 812px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
 `;
@@ -53,7 +53,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-    font-family: 'Pretendard';
+    font-family: 'pretendard';
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
@@ -65,7 +65,7 @@ const Input = styled.input`
 
 const LoginFail = styled.div`
     color: red;
-    font-family: 'Pretendard';
+    font-family: 'pretendard';
     font-size: 14px;
     font-weight: 400;
     text-align: center;
@@ -84,7 +84,7 @@ const ButtonLogin = styled.button`
 
     background: #609966;
     color: white;
-    font-family: 'Pretendard';
+    font-family: 'pretendard';
     font-size: 14px;
     font-weight: 550;
     line-height: 17px;
@@ -111,7 +111,7 @@ const SignupR = styled.span`
 `;
 
 const ButtonSignup = styled.button`
-    width: auto;
+    width: 100%;
     height: 59px;
     margin-top: 380px;
     padding: 20px 0px 20px 0px;
@@ -123,7 +123,7 @@ const ButtonSignup = styled.button`
 
 const Box = styled.div`
     background: #60996633;
-    width: 375px;
+    width: 100%;
     height: 100px;
 `;
 
@@ -150,6 +150,7 @@ const Login = () => {
 
             if (res.data.success) {
                 setAccount({ username: res.data.username }); // Recoil 상태 업데이트
+                //모든 유저 테이블의 속성 다 받기
                 // 로그인 성공 후 mainHome으로
                 navigate('/mainHome');
             } else {

@@ -5,7 +5,14 @@ const accountState = atom({
     default: {
         id: '',
         password: '',
-        //location : 상도시장
+        name: '',
+        phoneNumber: '',
+        myShop: '1', //가게 만들면 가게id
+        largeLoc: '',
+        fineLoc: '',
+        marketLoc: '',
+        marketId: '5', //시장 id
+        accountNum: '',
     },
 });
 

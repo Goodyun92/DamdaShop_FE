@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useRecoilState } from 'recoil';
+import accountState from '../../store/atoms';
 
 const C = styled.div`
-    width: 375px;
-    height: 812px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
 `;
@@ -149,6 +151,7 @@ const Signup = () => {
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState({ name: '', id: '', password: '' });
     const [showConfirm, setShowConfirm] = useState(false);
+    const [account, setAccount] = useRecoilState(accountState);
 
     const handleLogin = () => {
         navigate('/login');
@@ -172,9 +175,21 @@ const Signup = () => {
             const res = await axios.post('http://localhost:5000/signup', credentials);
 
             if (res.data.success) {
-                // 회원가입 성공 후 redirect 경로
+                // 회원가입 성공 후 로그인하고 aftersignup으로
                 console.log('signup success');
-                // navigate('/afterSignup');
+                try {
+                    // API endpoint
+                    const res = await axios.post('http://localhost:5000/login', credentials);
+
+                    if (res.data.success) {
+                        setAccount({ username: res.data.username });
+                        navigate('/afterSignup');
+                    } else {
+                        //alert(res.data.message);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
             } else {
                 console.log('signup fail');
                 alert(res.data.message);
