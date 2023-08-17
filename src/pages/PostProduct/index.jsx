@@ -1,13 +1,17 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import back from '../../imgs/Vector2.png';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import accountState from '../../store/atoms';
 
 const Container = styled.div`
     width: 100%;
 `;
 const Nav = styled.div``;
 const BackButton = styled.button``;
+const Form = styled.form``;
 const MrkCtBut = styled.button`
     height: 26px;
     margin: 10px;
@@ -26,11 +30,18 @@ const MrkCtBut = styled.button`
     border: 0.5px solid #e0e0e0;
 `;
 const PostProduct = () => {
-    const [productData, setProductData] = useState({
-        categoryId: '',
-    });
+    const navigate = useNavigate();
+
+    const [account, setAccount] = useRecoilState(accountState);
     const location = useLocation();
     const shopId = location.state.shopId;
+    const [productData, setProductData] = useState({
+        categoryId: 0,
+        price: 0,
+        productName: '',
+        stockQuantity: 0,
+        productDescription: '',
+    });
     const [selectedCt, setSelectedCt] = useState('');
 
     const buttons = [
@@ -43,11 +54,35 @@ const PostProduct = () => {
         '음료',
         '친환경·유기농',
     ];
+
+    const handleChange = (event) => {
+        setProductData({ ...productData, [event.target.name]: event.target.value });
+    };
+
+    //post할때 shop정보도 같이 줘야하나?
+    const complete = () => {
+        axios
+            .post('https://ssudamda.shop/products/register', {
+                categoryId: productData.categoryId,
+                marketId: account.marketId,
+                price: productData.price,
+                productDescription: productData.productDescription,
+                productName: productData.productName,
+                stockQuantity: productData.stockQuantity,
+                storeId: shopId,
+            })
+            .then(() => {
+                navigate(`/shop?shopId=${shopId}`);
+                //성공시 해당 가게 페이지로 이동
+            })
+            .catch();
+    };
+
     return (
         <Container>
             <Nav>
                 {/* 현재 상점 홈으로 이동 shopId 써야함 */}
-                <BackButton /*onClick={() => navigate(`/shop?shopId=${ }`)}*/>
+                <BackButton onClick={() => navigate(`/shop?shopId=${shopId}`)}>
                     <img src={back} />
                 </BackButton>
                 <div>판매 상품 등록하기</div>
@@ -69,27 +104,43 @@ const PostProduct = () => {
                     <button>삭제</button>
                 </div>
             </div>
-            <div>상품명</div>
-            <input type="text" />
-            <div>최종가격</div>
-            <input type="text" />
-            <div>상품 카테고리</div>
-            <input type="text" placeholder="등록하시는 상품의 카테고리를 지정해주세요." value={selectedCt} />
 
-            {buttons.map((btn, idx) => (
-                <MrkCtBut
-                    key={btn}
-                    isSelected={selectedCt === btn}
-                    onClick={() => {
-                        setSelectedCt(btn);
-                        setProductData({ categoryId: idx });
-                    }}
-                >
-                    {btn}
-                </MrkCtBut>
-            ))}
-
-            <button>등록하기</button>
+            <Form>
+                <div>상품명</div>
+                <input
+                    type="text"
+                    name="productName"
+                    onChange={handleChange}
+                    value={productData.productName}
+                    required
+                />
+                <div>최종가격</div>
+                <input type="text" name="price" onChange={handleChange} value={productData.price} required />
+                <div>상품 카테고리</div>
+                <input
+                    type="text"
+                    placeholder="등록하시는 상품의 카테고리를 지정해주세요."
+                    name="categoryId"
+                    onChange={handleChange}
+                    value={selectedCt}
+                    required
+                />
+                {buttons.map((btn, idx) => (
+                    <MrkCtBut
+                        key={btn}
+                        isSelected={selectedCt === btn}
+                        onClick={() => {
+                            setSelectedCt(btn);
+                            setProductData({ categoryId: idx });
+                        }}
+                    >
+                        {btn}
+                    </MrkCtBut>
+                ))}
+                <button type="submit" onClick={complete}>
+                    등록하기
+                </button>
+            </Form>
         </Container>
     );
 };

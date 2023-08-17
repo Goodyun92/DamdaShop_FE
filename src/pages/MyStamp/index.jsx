@@ -6,14 +6,35 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import accountState from '../../store/atoms';
+import ScrollHorizontal from 'react-scroll-horizontal';
 
-const Container = styled.div``;
-const Nav = styled.div``;
-
+const Container = styled.div`
+    width: 100%;
+`;
+const Nav = styled.div`
+    margin: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+const BackButton = styled.button`
+    border: none;
+    background-color: white;
+    width: 8px;
+    height: 16px;
+`;
+const Title = styled.div`
+    font-family: 'pretendard';
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: center;
+`;
 const MyStamp = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useRecoilState(accountState);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState([1]);
 
     useEffect(() => {
         getStamp();
@@ -21,10 +42,11 @@ const MyStamp = () => {
 
     async function getStamp() {
         // stamp get api
+        console.log(account.userId);
         axios
-            .get('', account)
+            .get(`https://ssudamda.shop/users/${account.userId}/stamps`)
             .then((response) => {
-                setData(response.data);
+                setData([...response.data]);
             })
             .catch((error) => {});
     }
@@ -32,21 +54,22 @@ const MyStamp = () => {
     return (
         <Container>
             <Nav>
-                <button onClick={() => navigate('/myPage')}>
+                <BackButton onClick={() => navigate('/myPage')}>
                     <FontAwesomeIcon icon={faChevronLeft} />
-                </button>
-                <div>내 토큰 스탬프</div>
-                <div>
-                    {/* 가로스크롤 컴포넌트안에 토큰들 이미지 map*/}
-
+                </BackButton>
+                <Title>내 토큰 스탬프</Title>
+                <div>{data}</div>
+            </Nav>
+            <div id="scroll-horizontal">
+                <ScrollHorizontal>
                     {data.map((item) => (
-                        <div key={item.id}>
+                        <div key={item}>
                             {/* Render your data here */}
-                            <p>{item.name}</p>
+                            <p>{item}</p>
                         </div>
                     ))}
-                </div>
-            </Nav>
+                </ScrollHorizontal>
+            </div>
         </Container>
     );
 };

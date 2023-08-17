@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import dots from '../../../imgs/dots.png';
+import axios from 'axios';
 
 const Container = styled.div`
     width: 100%;
@@ -38,7 +39,39 @@ const ModalContent = styled.div`
 `;
 
 const SellerShop = (shopId) => {
-    //axios,,, shop 정보 받아오기
+    //현재 선택된 상품
+    const [selected, setSelected] = useState({});
+
+    //받아온 shop정보들. 이거 활용해서 아래 정보보여줌
+    const [shopInfo, setShopInfo] = useState({});
+
+    //받아온 판매 목록들
+    const [shopProducts, setShopProducts] = useState({});
+
+    useEffect(() => {
+        //shopid로 store 정보 받아오기
+        axios
+            .get(`https://ssudamda.shop/stores/${shopId}`)
+            .then((res) => {
+                setShopInfo({ ...res.data });
+                getProducts();
+            })
+            .catch();
+    }, []);
+
+    //가게의 상품들 받아오기
+    const getProducts = () => {
+        axios
+            .get(`https://ssudamda.shop/products/by-store`, {
+                params: {
+                    storeId: shopId,
+                },
+            })
+            .then((res) => {
+                setShopProducts([...res.data]);
+            })
+            .catch();
+    };
 
     const navigate = useNavigate();
     const [stage, setStage] = useState(1);
@@ -48,8 +81,6 @@ const SellerShop = (shopId) => {
 
     const [modify, setModify] = useState(false);
     //true면 수정화면 띄움
-
-    //상품 수정할때 상품 id넘겨야됨 state2갈때 선택된 상품 넘겨
 
     const modifyOpen = () => {
         setModify(true);
@@ -62,7 +93,7 @@ const SellerShop = (shopId) => {
     const postProduct = () => {
         navigate('/postProduct', {
             state: {
-                shopId: '',
+                shopId: shopId,
             },
         });
     };
@@ -70,8 +101,8 @@ const SellerShop = (shopId) => {
     const editProduct = () => {
         navigate('/editProduct', {
             state: {
-                shopId: '',
-                productId: '',
+                shopId: shopId,
+                product: selected,
             },
         });
     };
@@ -84,15 +115,15 @@ const SellerShop = (shopId) => {
                         <BackButton onClick={() => navigate('/mainHome')}>
                             <FontAwesomeIcon icon={faChevronLeft} />
                         </BackButton>
-                        <div>{/*shopName*/}</div>
+                        <div>{shopInfo.storeName}</div>
                         <div></div>
                     </Nav>
                     <Profile>
                         <img></img>
                         <div>
-                            <div>가게이름</div>
-                            <div>시장</div>
-                            <div>카테고리</div>
+                            <div>{shopInfo.storeName}</div>
+                            <div>{shopInfo.market.marketName}</div>
+                            <div>{shopInfo.category.categoryName}</div>
                         </div>
                     </Profile>
                     <ButtonNav>
@@ -104,22 +135,50 @@ const SellerShop = (shopId) => {
                         <div>
                             <Info>
                                 <div>가게정보</div>
-                                <div>가게소개api</div>
-                                <div>시장</div>
-                                <div>계좌번호</div>
-                                <button>가게 정보 수정하기</button>
+                                <div>{shopInfo.storeDescription}</div>
+                                <div>{shopInfo.market.marketName}</div>
+                                <div>{shopInfo.user.accountBank}</div>
+                                <div>{shopInfo.user.accountDigit}</div>
+                                <div>{shopInfo.user.accountName}</div>
+                                <button onClick={navigate('/myPage')}>가게 정보 수정하기</button>
                             </Info>
                             <Products>
-                                <div>판매 상품</div>
-                                <div>상품 ... </div>
-                                <button onClick={postProduct}>판매 상품 등록하기</button>
+                                {shopProducts.map((product, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => {
+                                            setSelected({ ...product });
+                                            setStage(2);
+                                        }}
+                                    >
+                                        <h2>{product.productName}</h2>
+                                        <p>{product.price}</p>
+                                        <p>{product.market.marketName}</p>
+                                        <hr />
+                                    </button>
+                                ))}
+                                <button onClick={() => setTab(false)}>상품 더보기</button>
                             </Products>
                         </div>
                     ) : (
                         <div>
                             <div>판매 상품</div>
+                            {shopProducts.map((product, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => {
+                                        setSelected({ ...product });
+                                        setStage(2);
+                                    }}
+                                >
+                                    <h2>{product.productName}</h2>
+                                    <p>{product.price}</p>
+                                    <p>{product.market.marketName}</p>
+                                    <hr />
+                                </button>
+                            ))}
                             <div>
-                                상품
+                                예시상품
                                 <button onClick={() => setStage(stage + 1)}>주문, stage+1</button>
                             </div>
                             <button onClick={postProduct}>판매 상품 등록하기</button>
@@ -142,10 +201,10 @@ const SellerShop = (shopId) => {
                     <div>
                         <img />
                         <div>
-                            <div>가게이름</div>
-                            <div>상품이름</div>
-                            <div>가격</div>
-                            <div>로그인 후 주문하면</div>
+                            <div>{shopInfo.storeName}</div>
+                            <div>{selected.productName}</div>
+                            <div>{selected.price}</div>
+                            <div>로그인 후 주문하면 토큰드림</div>
                         </div>
                         <button>주문하기</button>
                     </div>

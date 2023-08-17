@@ -105,7 +105,7 @@ const AfterSignup = () => {
             </Content>
             <Line>내 가게를 등록해 운영하고 싶다면?</Line>
             <ButtonLogin onClick={() => navigate('/createShop')}>내 가게 만들기</ButtonLogin>
-            <ButtonGoMain onClick={() => navigate('/mainHome')}>닫기</ButtonGoMain>
+            <ButtonGoMain onClick={() => navigate('/login')}>로그인하러가기</ButtonGoMain>
         </Container>
     );
 };

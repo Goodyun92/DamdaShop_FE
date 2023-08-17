@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import ScrollHorizontal from 'react-scroll-horizontal';
 import vector from '../../imgs/Vector.png';
 import Order from '../../components/Order';
+import { useRecoilState } from 'recoil';
+import accountState from '../../store/atoms';
 
 const Container = styled.div`
     width: 95%;
@@ -89,9 +91,13 @@ const ModalContent = styled.div`
 
 function ShowProducts() {
     const navigate = useNavigate();
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [account, setAccount] = useRecoilState(accountState);
+
+    //상품 받아옴
+    const [data, setData] = useState([]);
+
+    //선택한 상품
+    const [selected, setSelected] = useState({});
 
     //파라미터로 전달해준 값 취득
     const location = useLocation();
@@ -100,23 +106,19 @@ function ShowProducts() {
     const btnValue = params.get('productCategory');
     const [selectedCt, setSelectedCt] = useState(btnValue);
 
-    // useEffect(() => {
-    //     const apiUrl = `https://your-api-endpoint.com/data?button=${btnValue}`;
-
-    //     axios
-    //         .get(apiUrl)
-    //         .then((response) => {
-    //             setData(response.data);
-    //             setLoading(false);
-    //         })
-    //         .catch((error) => {
-    //             setError(error);
-    //             setLoading(false);
-    //         });
-    // }, [btnValue]);
-
-    // if (loading) return <div>Loading...</div>;
-    // if (error) return <div>Error occurred: {error.message}</div>;
+    useEffect(() => {
+        axios
+            .get('https://ssudamda.shop/products/by-category', {
+                params: {
+                    categoryId: btnValue,
+                    marketId: account.marketId,
+                },
+            })
+            .then((response) => {
+                setData([...response.data]);
+            })
+            .catch((error) => {});
+    }, [btnValue]);
 
     const buttons = [
         '전체',
@@ -149,7 +151,12 @@ function ShowProducts() {
                             <FontAwesomeIcon icon={faChevronLeft} />
                         </BackButton>
                     </Nav>
-                    <div>상품정보 출력</div>
+                    <div>
+                        상품정보 출력
+                        <div>{selected.storeName}</div>
+                        <div>{selected.productName}</div>
+                        <div>{selected.price}</div>
+                    </div>
                     <button
                         onClick={() => {
                             setIsOrder(false);
@@ -177,17 +184,30 @@ function ShowProducts() {
                             ))}
                         </ScrollHorizontal>
                     </MrkCt>
-                    {/* 데이터 구조에 따라 렌더링 방법을 조정하세요. 
-                상품랜더링하기 map하면서 각 상품을 버튼으로 생성 onclick시 state에 상품 객체 전체 저장
-                */}
-                    {/* <p>{data.content}</p> */}
+                    <div>
+                        {data.map((product, index) => (
+                            <button
+                                key={index}
+                                onClick={() => {
+                                    setSelected({ ...product });
+                                    setIsOrder(true);
+                                }}
+                            >
+                                <h2>{product.productName}</h2>
+                                <p>Price: {product.price}</p>
+
+                                <p>Store: {product.storeName}</p>
+                                <hr />
+                            </button>
+                        ))}
+                    </div>
                     <Purchase onClick={() => setIsOrder(true)}>
                         <img src={vector} />
                     </Purchase>
                     {showModal && (
                         <ModalOverlay onClick={handleCloseModal}>
                             <ModalContent onClick={(e) => e.stopPropagation()}>
-                                <Order /*product 객체 전달*/ />
+                                <Order product={selected} /*product 객체 전달*/ />
                             </ModalContent>
                         </ModalOverlay>
                     )}

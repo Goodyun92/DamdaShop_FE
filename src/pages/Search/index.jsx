@@ -6,6 +6,8 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import ScrollHorizontal from 'react-scroll-horizontal';
+import { useRecoilState } from 'recoil';
+import accountState from '../../store/atoms';
 
 const Container = styled.div`
     width: 100%;
@@ -84,6 +86,7 @@ const RecBut = styled.button`
 
 const Search = () => {
     const navigate = useNavigate();
+    const [account, setAccount] = useRecoilState(accountState);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
@@ -97,21 +100,23 @@ const Search = () => {
         }
     };
 
-    const search = async () => {
-        try {
-            // 백엔드 API
-            const response = await axios.get('https://your-api-endpoint/search', {
+    const search = () => {
+        axios
+            .get(`https://ssudamda.shop/products/search`, {
                 params: {
-                    query: searchTerm,
+                    keyword: searchTerm,
+                    marketId: account?.marketId,
                 },
+            })
+            .then((Response) => {
+                console.log(Response.status);
+                console.log(Response.data);
+                // 결과를 상태에 저장합니다.
+                setSearchResults(Response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
             });
-
-            // 결과를 상태에 저장합니다.
-            setSearchResults(response.data.products);
-        } catch (error) {
-            console.error('Search error:', error);
-            alert('An error occurred during search');
-        }
     };
 
     const buttons = ['수박', '복숭아', '청상추', '식혜', '동치미', '무말랭이'];
@@ -146,7 +151,7 @@ const Search = () => {
                         <RecBut
                             key={idx}
                             onClick={() => {
-                                setSearchTerm({ btn });
+                                setSearchTerm(btn);
                                 search();
                             }}
                         >
@@ -158,9 +163,8 @@ const Search = () => {
             <div>
                 <h2>Search Results:</h2>
                 <ul>
-                    {searchResults.map((product) => (
-                        <li key={product.id}>{product.name}</li>
-                    ))}
+                    {searchResults.length > 0 &&
+                        searchResults.map((product) => <li key={product?.id}>{product?.name}</li>)}
                 </ul>
             </div>
         </Container>

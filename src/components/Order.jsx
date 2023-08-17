@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swipe from './Swipe';
 import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
+import accountState from '../store/atoms';
 import { buttonSwipedState } from '../store/swipeState';
 import back from '../imgs/Vector2.png';
 import styled from 'styled-components';
@@ -12,37 +14,52 @@ const Container = styled.div`
 `;
 const Nav = styled.div``;
 const BackButton = styled.button``;
-const Order = () => {
+const Order = (product) => {
     //파라미터product 객체 받기
-    //product객체의 가게id로 계좌 get
+    //product객체에 계좌도 있음
+
+    const [account, setAccount] = useRecoilState(accountState);
+
+    //상품 객체
+    const [productInfo, setProductInfo] = useState({ ...product });
+
+    //보낼 주문 객체
+    const [order, setOrder] = useState({
+        quantity: 1,
+    });
 
     const navigate = useNavigate();
     const isButtonSwiped = useRecoilValue(buttonSwipedState);
-    const [quantity, setQuantity] = useState(1);
     const [success, setSuccess] = useState(false);
-    const [orderRes, setOrderRes] = useState([]);
 
     const handleIncrement = () => {
-        setQuantity((prevQuantity) => prevQuantity + 1);
+        setOrder({
+            quantity: (prevQuantity) => prevQuantity + 1,
+        });
     };
 
     const handleDecrement = () => {
-        if (quantity > 1) {
-            setQuantity((prevQuantity) => prevQuantity - 1);
+        if (order.quantity > 1) {
+            setOrder({
+                quantity: (prevQuantity) => prevQuantity + 1,
+            });
         }
     };
 
-    const handleOrder = async () => {
-        try {
-            const response = await axios.post('https://your-api-endpoint.com/order', { quantity });
-            console.log('주문 성공:', response.data);
-            alert('주문성공');
-            setSuccess(true);
-            //order 결과 테이블 받기
-            setOrderRes(response.data);
-        } catch (error) {
-            console.error('주문 에러:', error);
-        }
+    const handleOrder = () => {
+        console.log(order.quantity);
+        const tmp = {
+            orderAmount: order.quantity,
+            prouductId: productInfo.prouductId,
+            userId: account.userId,
+        };
+        console.log(tmp);
+        axios
+            .post('https://ssudamda.shop/orders/register', tmp)
+            .then((response) => {
+                setSuccess(true);
+            })
+            .catch((error) => {});
     };
 
     useEffect(() => {
@@ -64,24 +81,28 @@ const Order = () => {
                     </Nav>
                     <div>주문이 완료되었어요!</div>
                     <div>입급 계좌를 확인해주세요</div>
-                    <div>24시간내에</div>
+                    <div>
+                        <div>24시간 내에 입금하지 않으면 주문이 자동 취소됩니다.</div>
+                        <div>입금을 완료하면 등록된 전화번호로 상품 수령 방법,</div>
+                        <div>배송 등에 관해 판매자에게 연락을 받게 됩니다.</div>
+                    </div>
                     <div>입금계좌정보</div>
                     <div>
                         <div>
                             <span>은행명</span>
-                            <span>은행</span>
+                            <span>{productInfo.user.accountBank}</span>
                         </div>
                         <div>
                             <span>계좌번호</span>
-                            <span>1234</span>
+                            <span>{productInfo.user.accountDigit}</span>
                         </div>
                         <div>
                             <span>예금주</span>
-                            <span>김숭실</span>
+                            <span>{productInfo.user.userNickName}</span>
                         </div>
                         <div>
                             <span>입금액</span>
-                            <span>10000원</span>
+                            <span>{productInfo.price}</span>
                         </div>
                     </div>
                     <button onClick={() => navigate('/orderHistory')}>주문 상세 내역 보기</button>
@@ -89,10 +110,13 @@ const Order = () => {
                 </div>
             ) : (
                 <div>
+                    <div>{productInfo.productName}</div>
+                    <div>{productInfo.price}</div>
                     <button onClick={handleDecrement}>-</button>
-                    <span>{quantity}</span>
+                    <span>{order.quantity}</span>
                     <button onClick={handleIncrement}>+</button>
-                    <Swipe></Swipe>
+                    {/* <Swipe></Swipe> */}
+                    <button onClick={handleOrder}></button>
                 </div>
             )}
         </Container>

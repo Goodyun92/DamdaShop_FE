@@ -2,12 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSetRecoilState } from 'recoil';
 import { buttonSwipedState } from '../store/swipeState';
+import orderbutton from '../imgs/orderbutton.png';
 
 const Container = styled.div`
     position: relative;
     width: 100%;
     height: 50px;
-    background-color: #e1e1e1;
+    background-color: #60996633;
+    border-radius: 5px;
 `;
 
 const DraggableButton = styled.div`
@@ -15,8 +17,23 @@ const DraggableButton = styled.div`
     left: 0;
     width: 50px;
     height: 50px;
-    background-color: #3498db;
+    background-color: #416444;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+`;
+
+const P = styled.div`
+    font-family: 'pretendard';
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    letter-spacing: -0.30000001192092896px;
+    text-align: center;
+    color: #416444;
+    padding-top: 15px;
 `;
 
 const SwipeComponent = () => {
@@ -65,7 +82,10 @@ const SwipeComponent = () => {
                 onMouseMove={dragging}
                 onMouseUp={endDragging}
                 onMouseLeave={endDragging}
-            />
+            >
+                <img src={orderbutton} />
+            </DraggableButton>
+            <P>밀어서 주문하기</P>
         </Container>
     );
 };

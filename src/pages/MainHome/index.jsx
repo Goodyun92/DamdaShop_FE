@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import GoSearch from './components/GoSearch';
 import GoMypage from './components/GoMyPage';
@@ -18,6 +18,8 @@ import accountState from '../../store/atoms';
 import ScrollHorizontal from 'react-scroll-horizontal';
 import SelectLocComp from '../../components/SelectLoc';
 import VoiceModule from './components/VoiceModule';
+import axios from 'axios';
+import Order from '../../components/Order';
 
 const Container = styled.div`
     margin-top: 10px;
@@ -209,20 +211,17 @@ const VoiceButton = styled.button`
 
 const MainHome = () => {
     const [account, setAccount] = useRecoilState(accountState);
-    const [selectedCt, setSelectedCt] = useState(0);
+    const [selectedCt, setSelectedCt] = useState({
+        name: '과일',
+        id: '1',
+    });
     const navigate = useNavigate();
 
-    const goProductCategory = (value) => {
-        navigate(`/showproducts?productCategory=${value}`);
-    };
+    //받아올 카테고리별 가게들
+    const [ctShops, setCtShops] = useState([]);
 
-    const goMarketCategory = (value) => {
-        navigate(`/showMarkets?marketCategory=${value}`);
-    };
-
-    const goShop = (value) => {
-        navigate(`/shop?shopId=${value}`);
-    };
+    //받아올 마감임박 상품들
+    const [oldProduct, setOldProduct] = useState([]);
 
     const buttons = [
         '과일',
@@ -236,6 +235,60 @@ const MainHome = () => {
     ];
 
     const [selectMarket, setSelectMarket] = useState(false);
+
+    //선택한 상품
+    const [selected, setSelected] = useState({});
+    //주문 모달
+    const [showModal, setShowModal] = useState(false);
+
+    //해당 카테고리 가게 목록 받아오기
+    useEffect(() => {
+        axios
+            .get('https://ssudamda.shop/stores/by-category', {
+                params: {
+                    categoryId: selectedCt.id,
+                    marketId: account.marketId,
+                },
+            })
+            .then((response) => {
+                setCtShops([...response.data]);
+            })
+            .catch((error) => {});
+    }, [selectedCt.id]);
+
+    //마감 임박상품 받아오기
+    useEffect(() => {
+        console.log(typeof account.marketId);
+        axios
+            .get('https://ssudamda.shop/products/lowest-stock', {
+                marketId: account.marketId,
+            })
+            .then((response) => {
+                setOldProduct([...response.data]);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    const goProductCategory = (value) => {
+        navigate(`/showproducts?productCategory=${value}`);
+    };
+
+    const goMarketCategory = (value) => {
+        navigate(`/showMarkets?marketCategory=${value}`);
+    };
+
+    const goShop = (value) => {
+        navigate(`/shop?shopId=${value}`);
+    };
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     const selectMarketOpen = () => {
         setSelectMarket(true);
@@ -254,6 +307,8 @@ const MainHome = () => {
     const voiceModClose = () => {
         setVoiceMod(false);
     };
+
+    console.log(account);
 
     return (
         <Container>
@@ -316,18 +371,38 @@ const MainHome = () => {
             <MrkCt id="scroll-horizontal">
                 <ScrollHorizontal>
                     {buttons.map((btn, idx) => (
-                        <MrkCtBut key={idx} isSelected={selectedCt === idx} onClick={() => setSelectedCt(idx)}>
+                        <MrkCtBut
+                            key={idx}
+                            isSelected={selectedCt === idx}
+                            onClick={() =>
+                                setSelectedCt({
+                                    id: idx,
+                                    name: btn,
+                                })
+                            }
+                        >
                             {btn}
                         </MrkCtBut>
                     ))}
                 </ScrollHorizontal>
             </MrkCt>
 
-            <MrkList>api호출 후 리스트 map</MrkList>
-            <button onClick={() => goShop('1')}>가게1mine</button>
-            <button onClick={() => goShop('2')}>가게2</button>
+            <MrkList>
+                {ctShops.map((shops, index) => (
+                    <button key={index} onClick={() => goShop(shops.storeId)}>
+                        <h2>{shops.storeName}</h2>
+                        <p>{shops.storeDescription}</p>
+                        <p>{selectedCt.name}</p>
+                        <hr />
+                    </button>
+                ))}
+            </MrkList>
 
-            <MoreMrkButton onClick={() => goMarketCategory(buttons[selectedCt])}>상품 더보기</MoreMrkButton>
+            {/* 임시 */}
+            <button onClick={() => goShop('1')}>예시가게1mine</button>
+            <button onClick={() => goShop('2')}>예시가게2</button>
+
+            <MoreMrkButton onClick={() => goMarketCategory(selectedCt.id)}>상품 더보기</MoreMrkButton>
 
             <Popu1>사람들이 많이 찾는</Popu1>
             <Popu2>
@@ -336,13 +411,21 @@ const MainHome = () => {
             </Popu2>
             <PopProd id="scroll-horizontal">
                 <ScrollHorizontal>
-                    {/* get으로 가져온후 map */}
+                    {oldProduct.map((product, index) => (
+                        <button
+                            key={index}
+                            onClick={() => {
+                                setSelected({ ...product });
+                                handleOpenModal();
+                            }}
+                        >
+                            <h2>{product.productName}</h2>
+                            <p>Price: {product.price}</p>
 
-                    {/* {buttons.map((btn, idx) => (
-                        <MrkCtBut key={idx} isSelected={selectedCt === idx} onClick={() => setSelectedCt(idx)}>
-                            {btn}
-                        </MrkCtBut>
-                    ))} */}
+                            <p>Store: {product.storeName}</p>
+                            <hr />
+                        </button>
+                    ))}
                 </ScrollHorizontal>
             </PopProd>
 
@@ -362,6 +445,13 @@ const MainHome = () => {
                 <ModalOverlay onClick={voiceModClose}>
                     <ModalContent onClick={(e) => e.stopPropagation()}>
                         <VoiceModule func={voiceModClose} />
+                    </ModalContent>
+                </ModalOverlay>
+            )}
+            {showModal && (
+                <ModalOverlay onClick={handleCloseModal}>
+                    <ModalContent onClick={(e) => e.stopPropagation()}>
+                        <Order product={selected} /*product 객체 전달*/ />
                     </ModalContent>
                 </ModalOverlay>
             )}

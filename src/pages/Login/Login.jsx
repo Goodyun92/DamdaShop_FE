@@ -142,24 +142,36 @@ const Login = () => {
     };
 
     const handleSubmit = async (event) => {
+        console.log(credentials);
+
         event.preventDefault();
 
-        try {
-            // API endpoint
-            const res = await axios.post('http://localhost:5000/login', credentials);
-
-            if (res.data.success) {
-                setAccount({ username: res.data.username }); // Recoil 상태 업데이트
-                //모든 유저 테이블의 속성 다 받기
-                // 로그인 성공 후 mainHome으로
+        axios
+            .post('https://ssudamda.shop/users/login', {
+                password: credentials.password,
+                userName: credentials.id,
+            })
+            .then((Response) => {
+                console.log(Response.status);
+                console.log(Response.data);
+                setAccount({
+                    ...account,
+                    userId: Response.data.userId,
+                    id: Response.data.userName,
+                    password: Response.data.password,
+                    name: Response.data.userNickName,
+                    phoneNumber: Response.data.phoneNumber,
+                    marketId: Response.data.market.marketId,
+                    accountBank: Response.data.accountBank,
+                    accountNum: Response.data.accountDigit,
+                });
+                console.log(account);
                 navigate('/mainHome');
-            } else {
-                //alert(res.data.message);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
                 setLoginResult(true);
-            }
-        } catch (error) {
-            console.error(error);
-        }
+            });
     };
 
     const handleSignup = () => {

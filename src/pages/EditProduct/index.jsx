@@ -1,26 +1,52 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import back from '../../imgs/Vector2.png';
 import styled from 'styled-components';
+import { useState } from 'react';
+import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import accountState from '../../store/atoms';
 
 const Container = styled.div`
     width: 100%;
 `;
 const Nav = styled.div``;
 const BackButton = styled.button``;
+const Form = styled.form``;
 
 const EditProduct = () => {
+    const navigate = useNavigate();
+    const [account, setAccount] = useRecoilState(accountState);
     const location = useLocation();
     const shopId = location.state.shopId;
-    const productId = location.state.productId;
+    const [productData, setProductData] = useState({
+        ...location.state.product,
+    });
 
-    //productId를 통해 product 정보 띄워줘야됨
-    //파라미터들을 객체로 넘기기?모든 정보 있게
+    const handleChange = (event) => {
+        setProductData({ ...productData, [event.target.name]: event.target.value });
+    };
+
+    const complete = () => {
+        axios
+            .patch(`https://ssudamda.shop/products/update/${productData.productId}`, {
+                categoryId: productData.categoryId,
+                price: productData.price,
+                productDescription: productData.productDescription,
+                productName: productData.productName,
+                stockQuantity: productData.stockQuantity,
+            })
+            .then(() => {
+                navigate(`/shop?shopId=${shopId}`);
+                //성공시 해당 가게 페이지로 이동
+            })
+            .catch();
+    };
 
     return (
         <Container>
             <Nav>
                 {/* 현재 상점 홈으로 이동 shopId 써야함 */}
-                <BackButton /*onClick={() => navigate(`/shop?shopId=${ }`)}*/>
+                <BackButton onClick={() => navigate(`/shop?shopId=${shopId}`)}>
                     <img src={back} />
                 </BackButton>
             </Nav>
@@ -40,14 +66,22 @@ const EditProduct = () => {
                     <button>삭제</button>
                 </div>
             </div>
-            <div>상품명</div>
-            <input type="text" />
-            <div>가격</div>
-            <input type="text" />
-            <div>상품 설명</div>
-            <input type="text" />
 
-            <button>수정하기</button>
+            <Form>
+                <div>상품명</div>
+                <input
+                    type="text"
+                    name="productName"
+                    onChange={handleChange}
+                    value={productData.productName}
+                    required
+                />
+                <div>최종가격</div>
+                <input type="text" name="price" onChange={handleChange} value={productData.price} required />
+                <button type="submit" onClick={complete}>
+                    수정하기
+                </button>
+            </Form>
         </Container>
     );
 };

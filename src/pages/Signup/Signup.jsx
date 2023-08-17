@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { useRecoilState } from 'recoil';
-import accountState from '../../store/atoms';
 
 const C = styled.div`
     width: 100%;
@@ -151,7 +149,6 @@ const Signup = () => {
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState({ name: '', id: '', password: '' });
     const [showConfirm, setShowConfirm] = useState(false);
-    const [account, setAccount] = useRecoilState(accountState);
 
     const handleLogin = () => {
         navigate('/login');
@@ -166,38 +163,28 @@ const Signup = () => {
         setShowConfirm(true);
     };
 
-    const handleConfirm = async (e) => {
+    const handleConfirm = (e) => {
         e.preventDefault();
         console.log('submit signup..');
+        console.log(credentials);
 
-        try {
-            // API endpoint
-            const res = await axios.post('http://localhost:5000/signup', credentials);
-
-            if (res.data.success) {
-                // 회원가입 성공 후 로그인하고 aftersignup으로
-                console.log('signup success');
-                try {
-                    // API endpoint
-                    const res = await axios.post('http://localhost:5000/login', credentials);
-
-                    if (res.data.success) {
-                        setAccount({ username: res.data.username });
-                        navigate('/afterSignup');
-                    } else {
-                        //alert(res.data.message);
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-            } else {
-                console.log('signup fail');
-                alert(res.data.message);
-            }
-        } catch (error) {
-            console.log('signup err');
-            console.error(error);
-        }
+        axios
+            .post('https://ssudamda.shop/users/signup', {
+                marketId: 1,
+                password: credentials.password,
+                phoneNumber: '01012345678',
+                userName: credentials.id,
+                userNickName: credentials.name,
+            })
+            .then((Response) => {
+                console.log(Response.status);
+                console.log(Response.data);
+                navigate('/afterSignup');
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+                alert('회원가입 실패!');
+            });
     };
 
     return (

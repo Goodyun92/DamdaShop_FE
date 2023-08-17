@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 const Nav = styled.nav`
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     font-family: 'pretendard';
     margin-left: 10px;
@@ -22,9 +22,71 @@ const Nav = styled.nav`
     letter-spacing: 0em;
     text-align: center;
 `;
+
+const NavTop = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+`;
 const BackButton = styled.button`
     background-color: white;
     border: none;
+`;
+const NowBox = styled.div`
+    background-color: #f8f8f8;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 20px;
+`;
+const NowDetail = styled.div`
+    color: ${(props) => (props.isSelected ? '##333333' : '#909090')};
+    font-family: 'pretendard';
+    font-size: ${(props) => (props.isSelected ? '14px' : '12px')};
+    font-weight: ${(props) => (props.isSelected ? 700 : 600)};
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 15px 20px;
+`;
+
+const Contents = styled.div`
+    width: 100%;
+`;
+
+const ButtonWrap = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+`;
+const SelButton = styled.button`
+    flex: 1 1 calc(33.3333% - 19px); /* 3개씩 한 줄에 표시하려면 33.3333%를 사용. 10px은 간격 조정을 위해 추가한 값이므로 원하는대로 조절하면 됩니다. */
+    height: 41px;
+    margin: 5px;
+    flex-grow: 0;
+    background-color: ${(props) => (props.isSelected ? 'rgba(96, 153, 102, 0.2)' : '#FFFFFF')};
+    border: 0.5px solid;
+    border-color: ${(props) => (props.isSelected ? '#609966' : '#B0B0B0')};
+`;
+
+const FooterButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 106px 20px 23px 20px;
+    width: 100%;
+    background-color: #609966;
+    color: #ffffff;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    width: 353px;
+    height: 47px;
+    font-family: 'pretendard';
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    letter-spacing: 0em;
 `;
 
 const SelectLoc = ({ func }) => {
@@ -45,82 +107,103 @@ const SelectLoc = ({ func }) => {
         //axios로 내 시장변경put account를 보냄
         //내 정보 수정api로
 
-        //3변수 지역변수로 저장
-        //로직으로 marketid return
-        //setAccount로
-
         axios
-            .put('', account)
+            .patch(`https://ssudamda.shop/users/update/${account.userId}`, {
+                marketId: account.marketId,
+                password: account.password,
+                phoneNumber: account.phoneNumber,
+                userName: account.id,
+                userNickName: account.name,
+            })
             .then((response) => {
                 func();
             })
             .catch((error) => {});
+
+        // func(); //임시
     };
 
     return (
         <Container>
             <Nav>
-                <div></div>
-                <div>시장 선택</div>
-                <BackButton onClick={func}>
-                    <img src={back} />
-                </BackButton>
+                <NavTop>
+                    <div></div>
+                    <div>시장 선택</div>
+                    <BackButton onClick={func}>
+                        <img src={back} />
+                    </BackButton>
+                </NavTop>
+                <NowBox>
+                    <NowDetail isSelected={stage === 1}>시/도 선택</NowDetail>
+                    <div>&gt;</div>
+                    <NowDetail isSelected={stage === 2}>구/군 선택</NowDetail>
+                    <div>&gt;</div>
+                    <NowDetail isSelected={stage === 3}>시장 선택</NowDetail>
+                </NowBox>
             </Nav>
-            <div>
-                {stage === 1 &&
-                    locations.map((location) => (
-                        <button
-                            key={location.name}
-                            onClick={() => {
-                                setAccount({ ...account, largeLoc: location.name });
-                                setIsChosen(true);
-                            }}
-                        >
-                            {location.name}
-                        </button>
-                    ))}
-
-                {stage === 2 &&
-                    locations
-                        .find((loc) => loc.name === account.largeLoc)
-                        .fine.map((fine) => (
-                            <button
-                                key={fine.name}
+            <Contents>
+                <ButtonWrap>
+                    {stage === 1 &&
+                        locations.map((location) => (
+                            <SelButton
+                                key={location.name}
                                 onClick={() => {
-                                    setAccount({ ...account, fineLoc: fine.name });
+                                    setAccount({ ...account, largeLoc: location.name });
                                     setIsChosen(true);
                                 }}
+                                isSelected={account.largeLoc === location.name}
                             >
-                                {fine.name}
-                            </button>
+                                {location.name}
+                            </SelButton>
                         ))}
+                </ButtonWrap>
 
-                {stage === 3 &&
-                    locations
-                        .find((loc) => loc.name === account.largeLoc)
-                        .fine.find((dist) => dist.name === account.fineLoc)
-                        .market.map((market) => (
-                            <button
-                                key={market.name}
-                                onClick={() => {
-                                    setAccount({ ...account, marketLoc: market.name, marketId: market.id });
-                                    setIsChosen(true);
-                                }}
-                            >
-                                {market.name}
-                            </button>
-                        ))}
+                <ButtonWrap>
+                    {stage === 2 &&
+                        locations
+                            .find((loc) => loc.name === account.largeLoc)
+                            .fine.map((fine) => (
+                                <SelButton
+                                    key={fine.name}
+                                    onClick={() => {
+                                        setAccount({ ...account, fineLoc: fine.name });
+                                        setIsChosen(true);
+                                    }}
+                                    isSelected={account.fineLoc === fine.name}
+                                >
+                                    {fine.name}
+                                </SelButton>
+                            ))}
+                </ButtonWrap>
 
-                {stage < 3 ? (
-                    <button onClick={proceedToNextStage} disabled={!isChosen}>
-                        다음
-                    </button>
-                ) : (
-                    <button onClick={complete} disabled={!isChosen}>
-                        완료
-                    </button>
-                )}
-            </div>
+                <ButtonWrap>
+                    {stage === 3 &&
+                        locations
+                            .find((loc) => loc.name === account.largeLoc)
+                            .fine.find((dist) => dist.name === account.fineLoc)
+                            .market.map((market) => (
+                                <SelButton
+                                    key={market.name}
+                                    onClick={() => {
+                                        setAccount({ ...account, marketLoc: market.name, marketId: market.id });
+                                        setIsChosen(true);
+                                    }}
+                                    isSelected={account.marketLoc === market.name}
+                                >
+                                    {market.name}
+                                </SelButton>
+                            ))}
+                </ButtonWrap>
+            </Contents>
+            {stage < 3 ? (
+                <FooterButton onClick={proceedToNextStage} disabled={!isChosen}>
+                    다음
+                </FooterButton>
+            ) : (
+                <FooterButton onClick={complete} disabled={!isChosen}>
+                    시장 선택하기
+                </FooterButton>
+            )}
         </Container>
     );
 };

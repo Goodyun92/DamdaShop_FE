@@ -24,10 +24,29 @@ const Shop = () => {
     const params = new URLSearchParams(location.search);
     //쿼리 취득
     const shopValue = params.get('shopId');
-    const shopType = shopValue === account.myShop; //true: 판매자화면 false: 구매자 화면
-    console.log(shopType);
-    // 구매자거 먼저 만들고 판매자 덧씌
 
+    const [myShop, setMyShop] = useState({});
+
+    //axios로 userid로 내 shop받아옴
+    axios
+        .get(
+            `https://ssudamda.shop
+        ​/users​/users​/${account.userId}​/store`
+        )
+        .then((Response) => {
+            setMyShop({ ...Response.data });
+        })
+        .catch((err) => {
+            console.error(err);
+            // setMyShop({});
+        });
+
+    //const myShop = 1; //임시
+
+    const shopType = shopValue === myShop.storeId; //true: 판매자화면 false: 구매자 화면
+    console.log(shopType);
+
+    //파라미터로 shopId넘겨줌
     return (
         <Container>
             {shopType ? <SellerShop shopId={shopValue}></SellerShop> : <ConsumShop shopId={shopValue}></ConsumShop>}
