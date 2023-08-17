@@ -53,8 +53,8 @@ const SellerShop = (shopId) => {
         axios
             .get(`https://ssudamda.shop/stores/${shopId}`)
             .then((res) => {
-                setShopInfo({ ...res.data });
-                // getProducts();
+                setShopInfo(...res.data);
+                getProducts();
                 console.log(shopInfo);
             })
             .catch();
@@ -69,7 +69,7 @@ const SellerShop = (shopId) => {
                 },
             })
             .then((res) => {
-                setShopProducts([...res.data]);
+                setShopProducts(...res.data);
             })
             .catch();
     };
@@ -128,7 +128,7 @@ const SellerShop = (shopId) => {
                         <img></img>
                         <div>
                             <div>{shopInfo.storeName}</div>
-                            {/* <div>{shopInfo.user.market.marketName}</div> */}
+                            <div>{shopInfo.user.market.marketName}</div>
                             <div>{shopInfo.category.categoryName}</div>
                         </div>
                     </Profile>
