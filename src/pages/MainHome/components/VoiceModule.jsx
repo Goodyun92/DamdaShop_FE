@@ -1,6 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import back from '../../../imgs/Vector2.png';
+import React, { useState } from 'react';
+import { useSpeechRecognition } from 'react-speech-kit';
 
 const Container = styled.div`
     width: 100%;
@@ -24,6 +25,14 @@ const BackButton = styled.button`
 `;
 
 const VoiceModule = ({ func }) => {
+    const [value, setValue] = useState('결과');
+
+    const { listen, listening, stop } = useSpeechRecognition({
+        onResult: (result) => {
+            setValue(result);
+        },
+    });
+
     return (
         <Container>
             <Nav>
@@ -33,6 +42,17 @@ const VoiceModule = ({ func }) => {
                     <img src={back} />
                 </BackButton>
             </Nav>
+            <div>
+                <h2>음성인식</h2>
+
+                <div>{value}</div>
+
+                <button onMouseDown={listen} onMouseUp={stop}>
+                    🎤speech
+                </button>
+
+                {listening && <div>음성인식 중</div>}
+            </div>
         </Container>
     );
 };

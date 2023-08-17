@@ -28,15 +28,15 @@ const locationState = atom({
                     market: [
                         {
                             name: '강남시장1',
-                            marketId: 4,
+                            Id: 4,
                         },
                         {
                             name: '강남시장2',
-                            marketId: 5,
+                            Id: 5,
                         },
                         {
-                            name: '강남시장1',
-                            marketId: 6,
+                            name: '강남시장3',
+                            Id: 6,
                         },
                     ],
                 },

@@ -54,7 +54,8 @@ const SellerShop = (shopId) => {
             .get(`https://ssudamda.shop/stores/${shopId}`)
             .then((res) => {
                 setShopInfo({ ...res.data });
-                getProducts();
+                // getProducts();
+                console.log(shopInfo);
             })
             .catch();
     }, []);
@@ -107,6 +108,11 @@ const SellerShop = (shopId) => {
         });
     };
 
+    console.log(shopId);
+    console.log(shopInfo);
+    console.log(shopProducts);
+    postProduct();
+
     return (
         <Container>
             {stage === 1 && (
@@ -122,7 +128,7 @@ const SellerShop = (shopId) => {
                         <img></img>
                         <div>
                             <div>{shopInfo.storeName}</div>
-                            <div>{shopInfo.market.marketName}</div>
+                            {/* <div>{shopInfo.user.market.marketName}</div> */}
                             <div>{shopInfo.category.categoryName}</div>
                         </div>
                     </Profile>
@@ -136,7 +142,7 @@ const SellerShop = (shopId) => {
                             <Info>
                                 <div>가게정보</div>
                                 <div>{shopInfo.storeDescription}</div>
-                                <div>{shopInfo.market.marketName}</div>
+                                <div>{shopInfo.user.market.marketName}</div>
                                 <div>{shopInfo.user.accountBank}</div>
                                 <div>{shopInfo.user.accountDigit}</div>
                                 <div>{shopInfo.user.accountName}</div>
@@ -153,7 +159,7 @@ const SellerShop = (shopId) => {
                                     >
                                         <h2>{product.productName}</h2>
                                         <p>{product.price}</p>
-                                        <p>{product.market.marketName}</p>
+                                        <p>{product.store.user.market.marketName}</p>
                                         <hr />
                                     </button>
                                 ))}
@@ -173,7 +179,7 @@ const SellerShop = (shopId) => {
                                 >
                                     <h2>{product.productName}</h2>
                                     <p>{product.price}</p>
-                                    <p>{product.market.marketName}</p>
+                                    <p>{product.store.user.market.marketName}</p>
                                     <hr />
                                 </button>
                             ))}

@@ -117,6 +117,7 @@ const SelectLoc = ({ func }) => {
             })
             .then((response) => {
                 func();
+                console.log(account);
             })
             .catch((error) => {});
 
@@ -185,7 +186,9 @@ const SelectLoc = ({ func }) => {
                                 <SelButton
                                     key={market.name}
                                     onClick={() => {
-                                        setAccount({ ...account, marketLoc: market.name, marketId: market.id });
+                                        console.log(market);
+                                        setAccount({ ...account, marketId: market.Id, marketLoc: market.name });
+                                        console.log(account);
                                         setIsChosen(true);
                                     }}
                                     isSelected={account.marketLoc === market.name}

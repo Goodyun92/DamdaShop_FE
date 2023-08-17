@@ -254,6 +254,11 @@ const Form = styled.form`
     flex-direction: column;
 `;
 
+const Wrap = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
 const Label = styled.label`
     width: Fixed (334px);
     height: Fixed (44px);
@@ -395,7 +400,7 @@ const Mypage = () => {
     //프로필 수정 입력받을때 쓸거
     const [profileData, setProfileData] = useState({ ...account });
     useEffect(() => {
-        setProfileData(account);
+        setProfileData({ ...account });
     }, [account]);
 
     const profileChange = (e) => {
@@ -404,18 +409,30 @@ const Mypage = () => {
     };
 
     //프로필 수정
-    const profileSubmit = async () => {
+    const profileSubmit = () => {
+        console.log(profileData);
+        const tmp = {
+            marketId: profileData.marketId,
+            password: profileData.marketId,
+            phoneNumber: profileData.phoneNumber,
+            userName: profileData.id,
+            userNickName: profileData.name,
+        };
+        console.log(tmp);
         axios
-            .patch(`https://ssudamda.shop/users/update/${profileData.userId}`, {
-                marketId: profileData.marketId,
-                password: profileData.marketId,
-                phoneNumber: profileData.phoneNumber,
-                userName: profileData.id,
-                userNickName: profileData.name,
-            })
+            .patch(`https://ssudamda.shop/users/update/${profileData.userId}`, tmp)
             .then(() => {
                 // Recoil 상태 업데이트
-                setAccount({ ...profileData });
+                console.log('성공');
+                setAccount({
+                    ...account,
+                    marketId: profileData.marketId,
+                    password: profileData.password,
+                    phoneNumber: profileData.phoneNumber,
+                    id: profileData.id,
+                    name: profileData.name,
+                });
+                console.log(account);
                 setStage(1);
             })
             .catch();
@@ -648,7 +665,7 @@ const Mypage = () => {
                         <MyName>프로필 수정</MyName>
                         <div></div>
                     </Nav>
-                    <Form onSubmit={profileSubmit}>
+                    <Wrap>
                         <Need>이름</Need>
                         <Label>
                             <Input type="text" name="name" onChange={profileChange} value={profileData.name} required />
@@ -677,8 +694,10 @@ const Mypage = () => {
                                 required
                             />
                         </Label>
-                        <ButtonChange type="submit">수정 완료</ButtonChange>
-                    </Form>
+                        <ButtonChange type="button" onClick={profileSubmit}>
+                            수정 완료
+                        </ButtonChange>
+                    </Wrap>
                 </div>
             )}
 

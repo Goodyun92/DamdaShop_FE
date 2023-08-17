@@ -8,11 +8,10 @@ const accountState = atom({
         password: 'pw',
         name: 'name',
         phoneNumber: '1234',
-        // myShop: '1', //가게 만들면 가게id
         largeLoc: '1',
         fineLoc: '1',
-        marketLoc: '1',
-        marketId: 5, //시장 id
+        marketLoc: '1', //1번 가게 이름으로 초기화
+        marketId: 5, //시장 id 1번으로 초기화
         accountBank: '신한',
         accountNum: '1234',
     },

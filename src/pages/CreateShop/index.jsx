@@ -107,18 +107,25 @@ const CreateShop = () => {
     const [mrkSelect, setMrkSelect] = useState(false);
     const [bankSelect, setBankSelect] = useState(false);
     const [newShop, setNewShop] = useState({
-        accountBank: null, //입력받기
+        accountBank: '', //입력받기
         accountDigit: 0, //입력받기
-        categoryId: 0, //입력받기
+        categoryId: 1, //입력받기
         storeDescription: '',
         storeName: '', //입력받기
     });
 
     const handleChange = (event) => {
-        setNewShop({ ...newShop, [event.target.name]: event.target.value });
+        // setNewShop({ ...newShop, [event.target.name]: event.target.value });
+        setNewShop((prev) => {
+            return {
+                ...prev,
+                [event.target.name]: event.target.value,
+            };
+        });
     };
 
     const handleButton = () => {
+        console.log(account);
         if (stage === 5) {
             //axios로 가게 post
             //계좌번호 account에 저장
@@ -128,7 +135,8 @@ const CreateShop = () => {
                 accountDigit: newShop.accountDigit,
                 accountName: account.name,
                 categoryId: newShop.categoryId + 1,
-                marketId: account.marketId,
+                // marketId: account.marketId,
+                marketId: 1,
                 storeDescription: '',
                 storeName: newShop.storeName,
                 userId: account.userId,
@@ -179,16 +187,16 @@ const CreateShop = () => {
                 <ModalOverlay onClick={() => setBankSelect(false)}>
                     <ModalContent onClick={(e) => e.stopPropagation()}>
                         <div>
-                            <button onClick={completeBank} value="농협">
+                            <button onClick={completeBank} value="농협1">
                                 농협1
                             </button>
-                            <button onClick={completeBank} value="농협">
+                            <button onClick={completeBank} value="농협2">
                                 농협2
                             </button>
-                            <button onClick={completeBank} value="농협">
+                            <button onClick={completeBank} value="농협3">
                                 농협3
                             </button>
-                            <button onClick={completeBank} value="농협">
+                            <button onClick={completeBank} value="농협4">
                                 농협4
                             </button>
                             <button onClick={completeBank} value="농협">
@@ -260,9 +268,12 @@ const CreateShop = () => {
                             isSelected={selectedCt === btn}
                             onClick={() => {
                                 setSelectedCt(btn);
-                                setNewShop({
-                                    categoryName: btn,
-                                    categoryId: idx,
+                                setNewShop((prev) => {
+                                    return {
+                                        ...prev,
+                                        categoryName: btn,
+                                        categoryId: idx,
+                                    };
                                 });
                             }}
                         >
@@ -274,22 +285,24 @@ const CreateShop = () => {
             )}
 
             {stage === 4 && (
-                <Form onSubmit={handleButton}>
-                    <P1>판매자 본인의 계좌번호를 입력해주세요</P1>{' '}
-                    <P2>상품을 주문하면, 고객에게 해당 계좌번호가 안내돼요.</P2>
+                <div>
                     <button onClick={() => setBankSelect(true)}>
                         {newShop.accountBank ? <div>{newShop.accountBank}</div> : <div>은행을 선택해주세요.</div>}
                     </button>
-                    <Input
-                        type="text"
-                        name="accountDigit"
-                        value={newShop.accountDigit}
-                        placeholder="계좌번호를 입력해주세요."
-                        onChange={handleChange}
-                        required
-                    />
-                    <button type="submit">입력완료</button>
-                </Form>
+                    <Form onSubmit={handleButton}>
+                        <P1>판매자 본인의 계좌번호를 입력해주세요</P1>{' '}
+                        <P2>상품을 주문하면, 고객에게 해당 계좌번호가 안내돼요.</P2>
+                        <Input
+                            type="text"
+                            name="accountDigit"
+                            value={newShop.accountDigit}
+                            placeholder="계좌번호를 입력해주세요."
+                            onChange={handleChange}
+                            required
+                        />
+                        <button type="submit">입력완료</button>
+                    </Form>
+                </div>
             )}
 
             {stage === 5 && (

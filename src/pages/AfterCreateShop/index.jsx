@@ -13,6 +13,9 @@ const AfterCreateShop = () => {
     const [account, setAccount] = useRecoilState(accountState);
     const [myShop, setMyShop] = useState({});
 
+    console.log(account);
+    console.log(myShop);
+
     //axios로 userid로 내 shop받아옴
     axios
         .get(
@@ -20,7 +23,8 @@ const AfterCreateShop = () => {
         ​/users​/users​/${account.userId}​/store`
         )
         .then((Response) => {
-            setMyShop({ ...Response.data });
+            setMyShop(...Response.data);
+            console.log(myShop);
         })
         .catch((err) => {
             console.error(err);

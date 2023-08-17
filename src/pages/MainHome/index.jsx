@@ -281,7 +281,12 @@ const MainHome = () => {
     };
 
     const goShop = (value) => {
-        navigate(`/shop?shopId=${value}`);
+        console.log(value);
+        navigate(`/shop`, {
+            state: {
+                storeId: value,
+            },
+        });
     };
 
     const handleOpenModal = () => {
