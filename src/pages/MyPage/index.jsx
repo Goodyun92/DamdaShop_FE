@@ -575,14 +575,14 @@ const Mypage = () => {
                         </Nav3>
 
                         <div id="scroll-horizontal">
-                            <ScrollHorizontal>
-                                {stamps.map((item) => (
-                                    <div key={item}>
-                                        {/* Render your data here */}
-                                        <p>{item}</p>
-                                    </div>
-                                ))}
-                            </ScrollHorizontal>
+                            {/* <ScrollHorizontal> */}
+                            {stamps.map((item) => (
+                                <div key={item}>
+                                    {/* Render your data here */}
+                                    <p>{item}</p>
+                                </div>
+                            ))}
+                            {/* </ScrollHorizontal> */}
                         </div>
                     </div>
                     <GoMyShop>내 가게 바로가기</GoMyShop>

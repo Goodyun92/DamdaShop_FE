@@ -146,19 +146,19 @@ const Search = () => {
                 <span>에요</span>
             </Pa>
             <Recommend id="scroll-horizontal">
-                <ScrollHorizontal>
-                    {buttons.map((btn, idx) => (
-                        <RecBut
-                            key={idx}
-                            onClick={() => {
-                                setSearchTerm(btn);
-                                search();
-                            }}
-                        >
-                            {btn}
-                        </RecBut>
-                    ))}
-                </ScrollHorizontal>
+                {/* <ScrollHorizontal> */}
+                {buttons.map((btn, idx) => (
+                    <RecBut
+                        key={idx}
+                        onClick={() => {
+                            setSearchTerm(btn);
+                            search();
+                        }}
+                    >
+                        {btn}
+                    </RecBut>
+                ))}
+                {/* </ScrollHorizontal> */}
             </Recommend>
             <div>
                 <h2>Search Results:</h2>

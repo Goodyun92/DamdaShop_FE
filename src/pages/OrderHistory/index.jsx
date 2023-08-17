@@ -48,8 +48,6 @@ const SpButton = styled.button`
 const OrderHistory = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
-    // const [selected, setSelected] = useState({});
-    // const [stage, setStage] = useState(true);
 
     const [tradeType, setTradeType] = useState(true);
     //true:구매내역  false:판매내역
@@ -66,9 +64,13 @@ const OrderHistory = () => {
         axios
             .get(apiUrl)
             .then((response) => {
-                setData([...response.data]);
+                console.log(response.data);
+                setData(response.data);
+                console.log(data);
             })
-            .catch((error) => {});
+            .catch((error) => {
+                setData([]);
+            });
     }, [tradeType]); // state 값이 변경될 때마다 이 effect가 다시 실행됩니다.
 
     return (
@@ -88,97 +90,24 @@ const OrderHistory = () => {
                     판매내역
                 </SpButton>
 
-                <div>
-                    {data.map((order, index) => (
-                        <button
-                            key={index}
-                            // onClick={() => {
-                            //     setSelected({ ...order });
-                            //     setStage(false);
-                            // }}
-                        >
-                            <h2>{order.productName}</h2>
-                            <p>{order.orderPrice}</p>
-                            <p>{order.orderDate}</p>
-                            <hr />
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            {/* {stage ? (
-                <div>
-                    <Nav>
-                        <button onClick={() => navigate('/myPage')}>
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                        </button>
-                        <div>거래내역</div>
-                        <div></div>
-                    </Nav>
-                    <ButtonNav>
-                        <button onClick={() => setTradeType(true)}>구매내역</button>
-                        <button onClick={() => setTradeType(false)}>판매내역</button>
-                    </ButtonNav>
-
+                {data.length > 0 && (
                     <div>
-                        <button onClick={() => setStage(false)}>예시상품1</button>
-                        {data.map((item) => (
-                            <div key={item.id}>
-                                {data.map((order, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => {
-                                            setSelected({ ...order });
-                                            setStage(false);
-                                        }}
-                                    >
-                                        <h2>{order.productName}</h2>
-                                        <p>{order.orderPrice}</p>
-                                        <p>{order.orderDate}</p>
-                                        <hr />
-                                    </button>
-                                ))}
-                                <p>{item.name}</p>
-                            </div>
+                        {data.map((pro, index) => (
+                            <button
+                                key={index}
+                                onClick={() => {
+                                    console.log(pro);
+                                }}
+                            >
+                                <h2>{pro.productName}</h2>
+                                <p>{pro.orderPrice}</p>
+                                <p>{pro.orderDate}</p>
+                                <hr />
+                            </button>
                         ))}
                     </div>
-                </div>
-            ) : (
-                <div>
-                    <Nav>
-                        <button onClick={() => setStage(true)}>
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                        </button>
-                        {tradeType ? <div>구매 내역 상세보기</div> : <div>판매 내역 상세보기</div>}
-                        <div></div>
-                    </Nav>
-                    <div>
-                        {tradeType ? (
-                            <div>아래 계좌로 입금해주세요.</div>
-                        ) : (
-                            <div>주문자가 입금을 완료했을 경우,상품 수령에 관한 연락을 주세요.</div>
-                        )}
-                    </div>
-                    <div>입금 계좌 정보</div>
-                    <div>
-                            <div>은행명</div>
-                            <div>은행명</div>
-                    </div>
-                    <div>
-                            <div>계좌번호</div>
-                            <div>은행명</div>
-                    </div>
-                    <div>
-                            <div>예금주</div>
-                            <div>은행명</div>
-                    </div>
-                    <div>
-                            <div>입금액</div>
-                            <div>은행명</div>
-                    </div>
-                    <div>주문자 정보</div>
-                </div>
-            )} */}
+                )}
+            </div>
         </Container>
     );
 };

@@ -122,24 +122,28 @@ const CreateShop = () => {
         if (stage === 5) {
             //axios로 가게 post
             //계좌번호 account에 저장
+
+            const tmp = {
+                accountBank: newShop.accountBank,
+                accountDigit: newShop.accountDigit,
+                accountName: account.name,
+                categoryId: newShop.categoryId + 1,
+                marketId: account.marketId,
+                storeDescription: '',
+                storeName: newShop.storeName,
+                userId: account.userId,
+            };
+
+            console.log(tmp);
             axios
-                .post('https://ssudamda.shop/stores/register', {
-                    accountBank: newShop.accountBank,
-                    accountDigit: newShop.accountDigit,
-                    accountName: account.name,
-                    categoryId: newShop.categoryId,
-                    marketId: account.marketId,
-                    storeDescription: newShop.storeDescription,
-                    storeName: newShop.storeName,
-                    userId: account.userId,
-                })
+                .post('https://ssudamda.shop/stores/register', tmp)
                 .then((response) => {
-                    navigate('/afterCreateShop');
                     setAccount({
                         ...account,
                         accountBank: newShop.accountBank,
                         accountNum: newShop.accountDigit,
                     });
+                    navigate('/afterCreateShop');
                 })
                 .catch((error) => {
                     console.log(error.response);
@@ -166,9 +170,6 @@ const CreateShop = () => {
                         <SelectLocComp
                             func={() => {
                                 setMrkSelect(false);
-                                setNewShop({
-                                    marketId: account.marketId,
-                                });
                             }}
                         />
                     </ModalContent>
@@ -179,16 +180,16 @@ const CreateShop = () => {
                     <ModalContent onClick={(e) => e.stopPropagation()}>
                         <div>
                             <button onClick={completeBank} value="농협">
-                                농협
+                                농협1
                             </button>
                             <button onClick={completeBank} value="농협">
-                                농협
+                                농협2
                             </button>
                             <button onClick={completeBank} value="농협">
-                                농협
+                                농협3
                             </button>
                             <button onClick={completeBank} value="농협">
-                                농협
+                                농협4
                             </button>
                             <button onClick={completeBank} value="농협">
                                 농협
@@ -222,8 +223,8 @@ const CreateShop = () => {
                 <FontAwesomeIcon icon={faChevronLeft} />
             </Back>
             {stage === 1 && (
-                <Form>
-                    <div>
+                <div>
+                    <Form onSubmit={handleButton}>
                         <P1>내 가게의 이름을 입력해주세요</P1>{' '}
                         <P2>고객에게 보여지는 이름이예요. 신중히 입력해주세요.</P2>
                         <Input
@@ -234,11 +235,9 @@ const CreateShop = () => {
                             onChange={handleChange}
                             required
                         />
-                    </div>
-                    <OkButton type="submit" onClick={handleButton}>
-                        입력완료
-                    </OkButton>
-                </Form>
+                        <OkButton type="submit">입력완료</OkButton>
+                    </Form>
+                </div>
             )}
 
             {stage === 2 && (
@@ -275,13 +274,13 @@ const CreateShop = () => {
             )}
 
             {stage === 4 && (
-                <div>
+                <Form onSubmit={handleButton}>
                     <P1>판매자 본인의 계좌번호를 입력해주세요</P1>{' '}
                     <P2>상품을 주문하면, 고객에게 해당 계좌번호가 안내돼요.</P2>
                     <button onClick={() => setBankSelect(true)}>
                         {newShop.accountBank ? <div>{newShop.accountBank}</div> : <div>은행을 선택해주세요.</div>}
                     </button>
-                    <input
+                    <Input
                         type="text"
                         name="accountDigit"
                         value={newShop.accountDigit}
@@ -289,10 +288,8 @@ const CreateShop = () => {
                         onChange={handleChange}
                         required
                     />
-                    <button type="submit" onClick={handleButton}>
-                        입력완료
-                    </button>
-                </div>
+                    <button type="submit">입력완료</button>
+                </Form>
             )}
 
             {stage === 5 && (

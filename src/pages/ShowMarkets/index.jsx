@@ -110,22 +110,22 @@ function ShowMarkets() {
                 <div></div>
             </Nav>
             <MrkCt id="scroll-horizontal">
-                <ScrollHorizontal>
-                    {buttons.map((btn, idx) => (
-                        <MrkCtBut
-                            key={idx}
-                            isSelected={selectedCt.name === btn}
-                            onClick={() =>
-                                setSelectedCt({
-                                    name: btn,
-                                    id: idx,
-                                })
-                            }
-                        >
-                            {btn}
-                        </MrkCtBut>
-                    ))}
-                </ScrollHorizontal>
+                {/* <ScrollHorizontal> */}
+                {buttons.map((btn, idx) => (
+                    <MrkCtBut
+                        key={idx}
+                        isSelected={selectedCt.name === btn}
+                        onClick={() =>
+                            setSelectedCt({
+                                name: btn,
+                                id: idx,
+                            })
+                        }
+                    >
+                        {btn}
+                    </MrkCtBut>
+                ))}
+                {/* </ScrollHorizontal> */}
             </MrkCt>
             <div>Content for {selectedCt.name}</div>
 

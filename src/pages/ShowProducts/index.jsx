@@ -176,13 +176,13 @@ function ShowProducts() {
                         <div></div>
                     </Nav>
                     <MrkCt id="scroll-horizontal">
-                        <ScrollHorizontal>
-                            {buttons.map((btn, idx) => (
-                                <MrkCtBut key={idx} isSelected={selectedCt === btn} onClick={() => setSelectedCt(btn)}>
-                                    {btn}
-                                </MrkCtBut>
-                            ))}
-                        </ScrollHorizontal>
+                        {/* <ScrollHorizontal> */}
+                        {buttons.map((btn, idx) => (
+                            <MrkCtBut key={idx} isSelected={selectedCt === btn} onClick={() => setSelectedCt(btn)}>
+                                {btn}
+                            </MrkCtBut>
+                        ))}
+                        {/* </ScrollHorizontal> */}
                     </MrkCt>
                     <div>
                         {data.map((product, index) => (

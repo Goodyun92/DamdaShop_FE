@@ -265,6 +265,7 @@ const MainHome = () => {
             })
             .then((response) => {
                 setOldProduct([...response.data]);
+                console.log(oldProduct);
             })
             .catch((error) => {
                 console.error(error);
@@ -369,22 +370,22 @@ const MainHome = () => {
             </Mrk1>
             <Mrk2>카테고리별로 나눠 보여드릴게요</Mrk2>
             <MrkCt id="scroll-horizontal">
-                <ScrollHorizontal>
-                    {buttons.map((btn, idx) => (
-                        <MrkCtBut
-                            key={idx}
-                            isSelected={selectedCt === idx}
-                            onClick={() =>
-                                setSelectedCt({
-                                    id: idx,
-                                    name: btn,
-                                })
-                            }
-                        >
-                            {btn}
-                        </MrkCtBut>
-                    ))}
-                </ScrollHorizontal>
+                {/* <ScrollHorizontal> */}
+                {buttons.map((btn, idx) => (
+                    <MrkCtBut
+                        key={idx}
+                        isSelected={selectedCt === idx}
+                        onClick={() =>
+                            setSelectedCt({
+                                id: idx,
+                                name: btn,
+                            })
+                        }
+                    >
+                        {btn}
+                    </MrkCtBut>
+                ))}
+                {/* </ScrollHorizontal> */}
             </MrkCt>
 
             <MrkList>
@@ -410,23 +411,23 @@ const MainHome = () => {
                 <span>이에요</span>
             </Popu2>
             <PopProd id="scroll-horizontal">
-                <ScrollHorizontal>
-                    {oldProduct.map((product, index) => (
-                        <button
-                            key={index}
-                            onClick={() => {
-                                setSelected({ ...product });
-                                handleOpenModal();
-                            }}
-                        >
-                            <h2>{product.productName}</h2>
-                            <p>Price: {product.price}</p>
+                {/* <ScrollHorizontal> */}
+                {oldProduct.map((product, index) => (
+                    <button
+                        key={index}
+                        onClick={() => {
+                            setSelected({ ...product });
+                            handleOpenModal();
+                        }}
+                    >
+                        <h2>{product.productName}</h2>
+                        <p>Price: {product.price}</p>
 
-                            <p>Store: {product.storeName}</p>
-                            <hr />
-                        </button>
-                    ))}
-                </ScrollHorizontal>
+                        <p>Store: {product.store.storeName}</p>
+                        <hr />
+                    </button>
+                ))}
+                {/* </ScrollHorizontal> */}
             </PopProd>
 
             <VoiceButton onClick={voiceModOpen}>

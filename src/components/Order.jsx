@@ -14,52 +14,59 @@ const Container = styled.div`
 `;
 const Nav = styled.div``;
 const BackButton = styled.button``;
-const Order = (product) => {
-    //파라미터product 객체 받기
+const Order = (props) => {
+    //파라미터product 객체 받기 props.product
     //product객체에 계좌도 있음
+
+    // console.log(props.product);
 
     const [account, setAccount] = useRecoilState(accountState);
 
     //상품 객체
-    const [productInfo, setProductInfo] = useState({ ...product });
+    const [productInfo, setProductInfo] = useState({ ...props.product });
+
+    console.log(productInfo);
 
     //보낼 주문 객체
-    const [order, setOrder] = useState({
-        quantity: 1,
-    });
+    const [order, setOrder] = useState(1);
 
     const navigate = useNavigate();
     const isButtonSwiped = useRecoilValue(buttonSwipedState);
     const [success, setSuccess] = useState(false);
 
     const handleIncrement = () => {
-        setOrder({
-            quantity: (prevQuantity) => prevQuantity + 1,
-        });
+        setOrder(order + 1);
     };
 
     const handleDecrement = () => {
         if (order.quantity > 1) {
-            setOrder({
-                quantity: (prevQuantity) => prevQuantity + 1,
-            });
+            setOrder(order - 1);
         }
     };
 
     const handleOrder = () => {
-        console.log(order.quantity);
+        console.log(props.product);
+        console.log(productInfo);
+        console.log(order);
         const tmp = {
-            orderAmount: order.quantity,
-            prouductId: productInfo.prouductId,
+            orderAmount: order,
+            productId: productInfo.productId,
             userId: account.userId,
         };
         console.log(tmp);
         axios
-            .post('https://ssudamda.shop/orders/register', tmp)
+            .post('https://ssudamda.shop/orders/register', {
+                orderAmount: order,
+                productId: productInfo.productId,
+                userId: account.userId,
+            })
             .then((response) => {
+                console.log(response);
                 setSuccess(true);
             })
-            .catch((error) => {});
+            .catch((error) => {
+                console.error(error);
+            });
     };
 
     useEffect(() => {
@@ -90,15 +97,15 @@ const Order = (product) => {
                     <div>
                         <div>
                             <span>은행명</span>
-                            <span>{productInfo.user.accountBank}</span>
+                            <span>{productInfo.store.user.accountBank}</span>
                         </div>
                         <div>
                             <span>계좌번호</span>
-                            <span>{productInfo.user.accountDigit}</span>
+                            <span>{productInfo.store.user.accountDigit}</span>
                         </div>
                         <div>
                             <span>예금주</span>
-                            <span>{productInfo.user.userNickName}</span>
+                            <span>{productInfo.store.user.userNickName}</span>
                         </div>
                         <div>
                             <span>입금액</span>
@@ -113,7 +120,7 @@ const Order = (product) => {
                     <div>{productInfo.productName}</div>
                     <div>{productInfo.price}</div>
                     <button onClick={handleDecrement}>-</button>
-                    <span>{order.quantity}</span>
+                    <span>{order}</span>
                     <button onClick={handleIncrement}>+</button>
                     {/* <Swipe></Swipe> */}
                     <button onClick={handleOrder}></button>

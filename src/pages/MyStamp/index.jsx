@@ -61,14 +61,14 @@ const MyStamp = () => {
                 <div>{data}</div>
             </Nav>
             <div id="scroll-horizontal">
-                <ScrollHorizontal>
-                    {data.map((item) => (
-                        <div key={item}>
-                            {/* Render your data here */}
-                            <p>{item}</p>
-                        </div>
-                    ))}
-                </ScrollHorizontal>
+                {/* <ScrollHorizontal> */}
+                {data.map((item) => (
+                    <div key={item}>
+                        {/* Render your data here */}
+                        <p>{item}</p>
+                    </div>
+                ))}
+                {/* </ScrollHorizontal> */}
             </div>
         </Container>
     );
