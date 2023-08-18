@@ -36,11 +36,10 @@ const PostProduct = () => {
     const location = useLocation();
     const shopId = location.state.shopId;
     const [productData, setProductData] = useState({
-        categoryId: 0,
         price: 0,
-        productName: '',
-        stockQuantity: 0,
         productDescription: '',
+        productName: '',
+        stockQuantity: 10,
     });
     const [selectedCt, setSelectedCt] = useState('');
 
@@ -63,7 +62,7 @@ const PostProduct = () => {
     const complete = () => {
         axios
             .post('https://ssudamda.shop/products/register', {
-                categoryId: productData.categoryId,
+                categoryId: productData.categoryId + 1,
                 marketId: account.marketId,
                 price: productData.price,
                 productDescription: productData.productDescription,
@@ -72,8 +71,11 @@ const PostProduct = () => {
                 storeId: shopId,
             })
             .then(() => {
-                navigate(`/shop?shopId=${shopId}`);
-                //성공시 해당 가게 페이지로 이동
+                navigate('shop', {
+                    state: {
+                        shopId: shopId,
+                    },
+                });
             })
             .catch();
     };
@@ -82,7 +84,15 @@ const PostProduct = () => {
         <Container>
             <Nav>
                 {/* 현재 상점 홈으로 이동 shopId 써야함 */}
-                <BackButton onClick={() => navigate(`/shop?shopId=${shopId}`)}>
+                <BackButton
+                    onClick={() =>
+                        navigate('shop', {
+                            state: {
+                                shopId: shopId,
+                            },
+                        })
+                    }
+                >
                     <img src={back} />
                 </BackButton>
                 <div>판매 상품 등록하기</div>

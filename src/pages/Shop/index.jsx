@@ -35,6 +35,7 @@ const Shop = () => {
             try {
                 const response = await axios.get(`https://ssudamda.shop/users/users/${account.userId}/store`);
                 setMyShop({ ...response.data });
+                console.log('성공');
                 console.log(myShop);
                 setSwitched(true);
             } catch (err) {
@@ -43,10 +44,11 @@ const Shop = () => {
         };
 
         fetchData();
-    }, []);
+    }, [shopValue]);
+
+    console.log(myShop);
 
     //const myShop = 1; //임시
-
     const shopType = shopValue === myShop?.storeId; //true: 판매자화면 false: 구매자 화면
     console.log(shopType);
 

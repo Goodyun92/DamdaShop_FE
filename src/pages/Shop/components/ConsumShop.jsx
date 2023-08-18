@@ -42,7 +42,7 @@ const ConsumShop = (shopId) => {
     const [selected, setSelected] = useState({});
 
     //받아온 shop정보들. 이거 활용해서 아래 정보보여줌
-    const [shopInfo, setShopInfo] = useState({});
+    const [shopInfo, setShopInfo] = useState();
 
     //받아온 판매 목록객체들 저장 배열
     const [shopProducts, setShopProducts] = useState([]);
@@ -50,25 +50,27 @@ const ConsumShop = (shopId) => {
     useEffect(() => {
         //shopid로 store 정보 받아오기
         axios
-            .get(`https://ssudamda.shop/stores/${shopId}`)
+            .get(`https://ssudamda.shop/stores/${shopId.shopId}`)
             .then((res) => {
-                setShopInfo({ ...res.data });
+                console.log(res);
+                setShopInfo(res.data);
                 getProducts();
                 console.log(shopInfo);
             })
             .catch();
-    }, []);
+    }, [shopId]);
 
     //가게의 상품들 받아오기
     const getProducts = () => {
         axios
             .get(`https://ssudamda.shop/products/by-store`, {
                 params: {
-                    storeId: shopId,
+                    storeId: shopId.shopId,
                 },
             })
             .then((res) => {
-                setShopProducts(...res.data);
+                console.log(res);
+                setShopProducts(res.data);
                 console.log(shopProducts);
             })
             .catch();
@@ -97,7 +99,7 @@ const ConsumShop = (shopId) => {
 
     return (
         <Container>
-            {stage === 1 && (
+            {stage === 1 && shopInfo && (
                 <div>
                     <Nav>
                         <BackButton onClick={() => navigate('/mainHome')}>
@@ -164,10 +166,6 @@ const ConsumShop = (shopId) => {
                                     <hr />
                                 </button>
                             ))}
-                            <div>
-                                예시상품
-                                <button onClick={() => setStage(stage + 1)}>주문, stage+1</button>
-                            </div>
                         </div>
                     )}
                 </div>

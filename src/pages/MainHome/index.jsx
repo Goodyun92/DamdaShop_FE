@@ -213,7 +213,7 @@ const MainHome = () => {
     const [account, setAccount] = useRecoilState(accountState);
     const [selectedCt, setSelectedCt] = useState({
         name: '과일',
-        id: '1',
+        id: 0,
     });
     const navigate = useNavigate();
 
@@ -246,7 +246,7 @@ const MainHome = () => {
         axios
             .get('https://ssudamda.shop/stores/by-category', {
                 params: {
-                    categoryId: selectedCt.id,
+                    categoryId: selectedCt.id + 1,
                     marketId: account.marketId,
                 },
             })
@@ -403,10 +403,6 @@ const MainHome = () => {
                     </button>
                 ))}
             </MrkList>
-
-            {/* 임시 */}
-            <button onClick={() => goShop('1')}>예시가게1mine</button>
-            <button onClick={() => goShop('2')}>예시가게2</button>
 
             <MoreMrkButton onClick={() => goMarketCategory(selectedCt.id)}>상품 더보기</MoreMrkButton>
 

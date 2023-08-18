@@ -450,7 +450,7 @@ const Mypage = () => {
                 accountBank: newShop.accountBank,
                 accountDigit: newShop.accountDigit,
                 accountName: account.name,
-                categoryId: newShop.categoryId,
+                categoryId: newShop.categoryId + 1,
                 marketId: account.marketId,
                 storeDescription: newShop.storeDescription,
                 storeName: newShop.storeName,
@@ -613,7 +613,16 @@ const Mypage = () => {
                                         <MarketName>{myShop.market.marketName}</MarketName>
                                     </ShopDetail>
                                 </div>
-                                <GoMyShopButton onClick={() => navigate(`/shop?shopId=${myShop.storeId}`)}>
+                                <GoMyShopButton
+                                    onClick={() => {
+                                        console.log(myShop.storeId);
+                                        navigate('/shop', {
+                                            state: {
+                                                storeId: myShop.storeId,
+                                            },
+                                        });
+                                    }}
+                                >
                                     &gt;
                                 </GoMyShopButton>
                             </MyShopTop>

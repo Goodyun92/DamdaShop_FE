@@ -43,17 +43,17 @@ const SellerShop = (shopId) => {
     const [selected, setSelected] = useState({});
 
     //받아온 shop정보들. 이거 활용해서 아래 정보보여줌
-    const [shopInfo, setShopInfo] = useState({});
+    const [shopInfo, setShopInfo] = useState();
 
     //받아온 판매 목록들
-    const [shopProducts, setShopProducts] = useState({});
+    const [shopProducts, setShopProducts] = useState([]);
 
     useEffect(() => {
         //shopid로 store 정보 받아오기
         axios
-            .get(`https://ssudamda.shop/stores/${shopId}`)
+            .get(`https://ssudamda.shop/stores/${shopId.shopId}`)
             .then((res) => {
-                setShopInfo(...res.data);
+                setShopInfo(res.data);
                 getProducts();
                 console.log(shopInfo);
             })
@@ -65,13 +65,16 @@ const SellerShop = (shopId) => {
         axios
             .get(`https://ssudamda.shop/products/by-store`, {
                 params: {
-                    storeId: shopId,
+                    storeId: shopId.shopId,
                 },
             })
             .then((res) => {
-                setShopProducts(...res.data);
+                setShopProducts(res.data);
+                console.log(shopProducts);
             })
-            .catch();
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     const navigate = useNavigate();
@@ -111,11 +114,10 @@ const SellerShop = (shopId) => {
     console.log(shopId);
     console.log(shopInfo);
     console.log(shopProducts);
-    postProduct();
 
     return (
         <Container>
-            {stage === 1 && (
+            {stage === 1 && shopInfo && (
                 <div>
                     <Nav>
                         <BackButton onClick={() => navigate('/mainHome')}>
@@ -146,7 +148,7 @@ const SellerShop = (shopId) => {
                                 <div>{shopInfo.user.accountBank}</div>
                                 <div>{shopInfo.user.accountDigit}</div>
                                 <div>{shopInfo.user.accountName}</div>
-                                <button onClick={navigate('/myPage')}>가게 정보 수정하기</button>
+                                <button onClick={() => navigate('/myPage')}>가게 정보 수정하기</button>
                             </Info>
                             <Products>
                                 {shopProducts.map((product, index) => (
@@ -183,10 +185,7 @@ const SellerShop = (shopId) => {
                                     <hr />
                                 </button>
                             ))}
-                            <div>
-                                예시상품
-                                <button onClick={() => setStage(stage + 1)}>주문, stage+1</button>
-                            </div>
+
                             <button onClick={postProduct}>판매 상품 등록하기</button>
                         </div>
                     )}

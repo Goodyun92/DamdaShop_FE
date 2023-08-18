@@ -1,4 +1,7 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 const accountState = atom({
     key: 'accountState',
@@ -15,6 +18,7 @@ const accountState = atom({
         accountBank: '신한',
         accountNum: '1234',
     },
+    effects_UNSTABLE: [persistAtom],
 });
 
 export default accountState;
