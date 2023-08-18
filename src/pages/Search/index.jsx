@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import ScrollHorizontal from 'react-scroll-horizontal';
 import { useRecoilState } from 'recoil';
 import accountState from '../../store/atoms';
+import img1 from '../../imgs/category2.png';
 
 const Container = styled.div`
     width: 100%;
@@ -212,7 +213,7 @@ const Search = () => {
                 <PList>
                     {searchResults.map((product, index) => (
                         <ShopButton key={index}>
-                            <ShopImg src="" alt="가게 이미지`category${shops.category.catgoryId}`" />
+                            <ShopImg src={img1} alt="가게 이미지`category${shops.category.catgoryId}`" />
                             <ShopContents>
                                 <Sc1>{product.id}</Sc1>
                                 <Sc2>{product.name}</Sc2>

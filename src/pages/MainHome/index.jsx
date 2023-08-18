@@ -255,14 +255,7 @@ const ModalContent = styled.div`
     border-radius: 8px;
 `;
 
-const VoiceButton = styled.button`
-    position: fixed;
-    top: 80%;
-    left: 46%;
-    background-color: white;
-    border: none;
-    border-radius: 50%;
-`;
+const VoiceButton = styled.button``;
 
 const ShopButton = styled.button`
     width: 95%;
@@ -315,6 +308,10 @@ const VoiceImg = styled.img`
     background-color: white;
     border: none;
     outline: none;
+    position: fixed;
+    top: 80%;
+    left: 46%;
+    background-color: white;
 `;
 const MainHome = () => {
     const [account, setAccount] = useRecoilState(accountState);
@@ -624,9 +621,9 @@ const MainHome = () => {
                 {/* </ScrollHorizontal> */}
             </PopProd>
 
-            <VoiceButton img onClick={voiceModOpen}>
-                <VoiceImg src={govoice} />
-            </VoiceButton>
+            {/* <VoiceButton > */}
+            <VoiceImg onClick={voiceModOpen} src={govoice} />
+            {/* </VoiceButton> */}
 
             {selectMarket && (
                 <ModalOverlay onClick={selectMarketClose}>
