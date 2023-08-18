@@ -10,6 +10,18 @@ import ScrollHorizontal from 'react-scroll-horizontal';
 import none from '../../imgs/none.png';
 import SelectLocComp from '../../components/SelectLoc';
 import noneuser from '../../imgs/noneuser.png';
+import hana from '../../imgs/hana.png';
+import ibk from '../../imgs/ibk.png';
+import k from '../../imgs/k.png';
+import kakao from '../../imgs/kakao.png';
+import kb from '../../imgs/kb.png';
+import nh from '../../imgs/nh.png';
+import pst from '../../imgs/pst.png';
+import sae from '../../imgs/sae.png';
+import sh from '../../imgs/sh.png';
+import sin from '../../imgs/sin.png';
+import toss from '../../imgs/toss.png';
+import woori from '../../imgs/woori.png';
 
 const Container = styled.div`
     width: 100%;
@@ -42,8 +54,12 @@ const Nav2 = styled.div`
 
 const Nav3 = styled.div`
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     margin: 0px 21px;
+`;
+const StampNav = styled.div`
+    display: flex;
+    justify-content: space-between;
 `;
 const MyStamp = styled.div`
     font-family: 'pretendard';
@@ -351,6 +367,81 @@ const ModalContent = styled.div`
     border-radius: 8px;
 `;
 
+const Wrap5 = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+`;
+const ProImg = styled.div`
+    background-color: #909090;
+`;
+const ProName = styled.div`
+    font-family: 'pretendard';
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+`;
+const Content = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+const ProButton = styled.div`
+    display: flex;
+    gap: 10px;
+    margin-left: 25px;
+`;
+const ProPrice = styled.div`
+    font-family: 'pretendard';
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0em;
+`;
+const ProDate = styled.div`
+    font-family: 'pretendard';
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    color: #909090;
+`;
+
+const Wrap4 = styled.div`
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+`;
+
+const BButtons = styled.div`
+    margin-left: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+`;
+const BankButton = styled.button`
+    width: 105px;
+    height: 72px;
+    border-radius: 12px;
+    background-color: #f8f8f8;
+    font-family: 'pretendard';
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+`;
+const BankImg = styled.img`
+    margin-bottom: 5px;
+    background-color: #f8f8f8;
+`;
+
 const Mypage = () => {
     const navigate = useNavigate();
 
@@ -532,44 +623,56 @@ const Mypage = () => {
             {bankSelect && (
                 <ModalOverlay onClick={() => setBankSelect(false)}>
                     <ModalContent onClick={(e) => e.stopPropagation()}>
-                        <div>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                        </div>
+                        <BButtons>
+                            <BankButton onClick={completeBank} value="NH농협">
+                                <BankImg src={nh} />
+                                NH농협
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="카카오뱅크">
+                                <BankImg src={kakao} />
+                                카카오뱅크
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="KB국민">
+                                <BankImg src={kb} />
+                                KB국민
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="신한">
+                                <BankImg src={sin} />
+                                신한
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="우리">
+                                <BankImg src={woori} />
+                                우리
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="토스뱅크">
+                                <BankImg src={toss} />
+                                토스뱅크
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="IBK기업">
+                                <BankImg src={ibk} />
+                                IBK기업
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="하나">
+                                <BankImg src={hana} />
+                                하나
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="새마을">
+                                <BankImg src={sae} />
+                                새마을
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="케이뱅크">
+                                <BankImg src={k} />
+                                케이뱅크
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="우체국">
+                                <BankImg src={pst} />
+                                우체국
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="수협">
+                                <BankImg src={sh} />
+                                수협
+                            </BankButton>
+                        </BButtons>
                     </ModalContent>
                 </ModalOverlay>
             )}
@@ -586,21 +689,25 @@ const Mypage = () => {
                     </Nav2>
                     <div>
                         <Nav3>
-                            <MyStamp>내 토큰 스탬프</MyStamp>
-                            <StampButton onClick={() => navigate('/myStamp')}>더보기&gt;</StampButton>
-                            <div>{stamps}</div>
+                            <StampNav>
+                                <MyStamp>내 토큰 스탬프</MyStamp>
+                                <StampButton onClick={() => navigate('/myStamp')}>더보기&gt;</StampButton>
+                            </StampNav>
                         </Nav3>
-
-                        <div id="scroll-horizontal">
+                        <Wrap4 id="scroll-horizontal">
                             {/* <ScrollHorizontal> */}
                             {stamps.map((item) => (
                                 <div key={item}>
                                     {/* Render your data here */}
-                                    <p>{item}</p>
+                                    {/* <p>{item}</p> */}
+                                    <img
+
+                                    // src={}
+                                    />
                                 </div>
                             ))}
                             {/* </ScrollHorizontal> */}
-                        </div>
+                        </Wrap4>
                     </div>
                     <GoMyShop>내 가게 바로가기</GoMyShop>
                     {haveMyShop ? (
@@ -653,16 +760,25 @@ const Mypage = () => {
                     <SpButton isSelected={!tradeType} onClick={() => setTradeType(false)}>
                         판매내역
                     </SpButton>
-                    <div>
-                        {data.map((order, index) => (
-                            <button key={index}>
-                                <h2>{order.productName}</h2>
-                                <p>{order.orderPrice}</p>
-                                <p>{order.orderDate}</p>
-                                <hr />
-                            </button>
+                    <Wrap5>
+                        {data.map((pro, index) => (
+                            <ProButton
+                                key={index}
+                                onClick={() => {
+                                    console.log(pro);
+                                }}
+                            >
+                                <ProImg
+                                // src={}
+                                ></ProImg>
+                                <Content>
+                                    <ProName>{pro.productName}</ProName>
+                                    <ProPrice>{pro.orderPrice}</ProPrice>
+                                    <ProDate>{pro.orderDate}</ProDate>
+                                </Content>
+                            </ProButton>
                         ))}
-                    </div>
+                    </Wrap5>
                     <MoreHistoryButton onClick={() => navigate('/orderHistory')}>거래 내역 더보기</MoreHistoryButton>
                 </div>
             )}

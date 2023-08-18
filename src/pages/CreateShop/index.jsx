@@ -9,6 +9,18 @@ import accountState from '../../store/atoms';
 import axios from 'axios';
 import SelectLocComp from '../../components/SelectLoc';
 import none from '../../imgs/none.png';
+import hana from '../../imgs/hana.png';
+import ibk from '../../imgs/ibk.png';
+import k from '../../imgs/k.png';
+import kakao from '../../imgs/kakao.png';
+import kb from '../../imgs/kb.png';
+import nh from '../../imgs/nh.png';
+import pst from '../../imgs/pst.png';
+import sae from '../../imgs/sae.png';
+import sh from '../../imgs/sh.png';
+import sin from '../../imgs/sin.png';
+import toss from '../../imgs/toss.png';
+import woori from '../../imgs/woori.png';
 
 const Container = styled.div`
     width: 100%;
@@ -17,6 +29,8 @@ const Container = styled.div`
 const Back = styled.button`
     background-color: white;
     border: none;
+    margin-top: 15px;
+    font-size: 16px;
 `;
 const P1 = styled.div`
     font-family: 'pretendard';
@@ -24,6 +38,7 @@ const P1 = styled.div`
     font-weight: 600;
     line-height: 26px;
     letter-spacing: -0.30000001192092896px;
+    margin: 26px 0px 9px 0px;
 `;
 const P2 = styled.div`
     font-family: 'pretendard';
@@ -31,23 +46,77 @@ const P2 = styled.div`
     font-weight: 500;
     line-height: 18px;
     letter-spacing: -0.30000001192092896px;
+    color: #707070;
+    margin-bottom: 25px;
 `;
 const Input = styled.input`
-    color: #b0b0b0;
+    margin-top: 10px;
+    color: black;
     background-color: #ffffff;
 
-    width: 100%;
+    /* width: 100%; */
     border-radius: 5px;
     border: 0.8px solid #505050;
     gap: 10px;
+    width: Fixed (334px);
+    height: Fixed (44px);
+
+    padding: 8px 16px 8px 16px;
+    border-radius: 5px;
+    border: solid 1px;
+    gap: 10px;
 `;
-const Form = styled.form``;
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+`;
 const OkButton = styled.button`
-    color: #ffffff;
-    background-color: #609966;
-    width: 100%;
+    margin-top: 480px;
+    width: Fixed (333px);
+    height: Fixed (41px);
+    top: 322px;
+    left: 21px;
+    padding: 14px 40px 14px 40px;
     border-radius: 5px;
     border: none;
+    gap: 10px;
+
+    background: #609966;
+    color: white;
+    font-family: 'Pretendard';
+    font-size: 14px;
+    font-weight: 550;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: center;
+`;
+
+const Wrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 0px 10px;
+`;
+
+const Wrap2 = styled.div``;
+const SetMarketButton = styled.button`
+    margin-top: 9px;
+    margin-bottom: 10px;
+    width: Fixed (334px);
+    height: Fixed (50px);
+    top: 236px;
+    left: 20px;
+    padding: 8px 16px 8px 16px;
+    border-radius: 5px;
+    border: solid 1px;
+    gap: 177px;
+    background-color: white;
+    font-family: 'pretendard';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: black;
 `;
 
 const ModalOverlay = styled.div`
@@ -65,10 +134,13 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-    width: 100%;
+    width: 350px;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const MrkCtBut = styled.button`
@@ -87,6 +159,64 @@ const MrkCtBut = styled.button`
     letter-spacing: -0.30000001192092896px;
     text-align: center;
     border: 0.5px solid #e0e0e0;
+`;
+const AccBox = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const BButtons = styled.div`
+    margin-left: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+`;
+const BankButton = styled.button`
+    width: 105px;
+    height: 72px;
+    border-radius: 12px;
+    background-color: #f8f8f8;
+    font-family: 'pretendard';
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+`;
+const BankImg = styled.img`
+    margin-bottom: 5px;
+    background-color: #f8f8f8;
+`;
+
+const PhotoImg = styled.img`
+    width: 100px;
+    height: 100px;
+`;
+const PhotoButton = styled.button`
+    width: 82px;
+    height: 30px;
+    font-family: 'pretendard';
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: -0.30000001192092896px;
+    text-align: center;
+    background-color: #efefef;
+    border: none;
+`;
+
+const PhotoWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
 `;
 
 const CreateShop = () => {
@@ -186,44 +316,56 @@ const CreateShop = () => {
             {bankSelect && (
                 <ModalOverlay onClick={() => setBankSelect(false)}>
                     <ModalContent onClick={(e) => e.stopPropagation()}>
-                        <div>
-                            <button onClick={completeBank} value="농협1">
-                                농협1
-                            </button>
-                            <button onClick={completeBank} value="농협2">
-                                농협2
-                            </button>
-                            <button onClick={completeBank} value="농협3">
-                                농협3
-                            </button>
-                            <button onClick={completeBank} value="농협4">
-                                농협4
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                            <button onClick={completeBank} value="농협">
-                                농협
-                            </button>
-                        </div>
+                        <BButtons>
+                            <BankButton onClick={completeBank} value="NH농협">
+                                <BankImg src={nh} />
+                                NH농협
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="카카오뱅크">
+                                <BankImg src={kakao} />
+                                카카오뱅크
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="KB국민">
+                                <BankImg src={kb} />
+                                KB국민
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="신한">
+                                <BankImg src={sin} />
+                                신한
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="우리">
+                                <BankImg src={woori} />
+                                우리
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="토스뱅크">
+                                <BankImg src={toss} />
+                                토스뱅크
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="IBK기업">
+                                <BankImg src={ibk} />
+                                IBK기업
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="하나">
+                                <BankImg src={hana} />
+                                하나
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="새마을">
+                                <BankImg src={sae} />
+                                새마을
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="케이뱅크">
+                                <BankImg src={k} />
+                                케이뱅크
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="우체국">
+                                <BankImg src={pst} />
+                                우체국
+                            </BankButton>
+                            <BankButton onClick={completeBank} value="수협">
+                                <BankImg src={sh} />
+                                수협
+                            </BankButton>
+                        </BButtons>
                     </ModalContent>
                 </ModalOverlay>
             )}
@@ -231,7 +373,7 @@ const CreateShop = () => {
                 <FontAwesomeIcon icon={faChevronLeft} />
             </Back>
             {stage === 1 && (
-                <div>
+                <Wrap>
                     <Form onSubmit={handleButton}>
                         <P1>내 가게의 이름을 입력해주세요</P1>{' '}
                         <P2>고객에게 보여지는 이름이예요. 신중히 입력해주세요.</P2>
@@ -245,53 +387,55 @@ const CreateShop = () => {
                         />
                         <OkButton type="submit">입력완료</OkButton>
                     </Form>
-                </div>
+                </Wrap>
             )}
 
             {stage === 2 && (
-                <div>
+                <Wrap>
                     <P1>내 가게가 속한 시장을 지정해주세요.</P1> <P2>고객이 지정한 시장명에 맞춰 가게가 표시돼요. </P2>
                     <div>시장</div>
-                    <button onClick={() => setMrkSelect(true)}>시장을 지정해주세요.</button>
-                    <button onClick={handleButton}>입력완료</button>
-                </div>
+                    <SetMarketButton onClick={() => setMrkSelect(true)}>시장을 지정해주세요.</SetMarketButton>
+                    <OkButton onClick={handleButton}>입력완료</OkButton>
+                </Wrap>
             )}
 
             {stage === 3 && (
-                <div>
+                <Wrap>
                     <P1>내 가게의 카테고리를 지정해주세요</P1> <P2>지정하신 카테고리를 기반으로 가게가 분류돼요.</P2>
                     <div>업종</div>
-                    <div>{newShop.categoryName}</div>
-                    {buttons.map((btn, idx) => (
-                        <MrkCtBut
-                            key={btn}
-                            isSelected={selectedCt === btn}
-                            onClick={() => {
-                                setSelectedCt(btn);
-                                setNewShop((prev) => {
-                                    return {
-                                        ...prev,
-                                        categoryName: btn,
-                                        categoryId: idx,
-                                    };
-                                });
-                            }}
-                        >
-                            {btn}
-                        </MrkCtBut>
-                    ))}
-                    <button onClick={handleButton}>입력완료</button>
-                </div>
+                    <SetMarketButton>{newShop.categoryName}</SetMarketButton>
+                    <Wrap2>
+                        {buttons.map((btn, idx) => (
+                            <MrkCtBut
+                                key={btn}
+                                isSelected={selectedCt === btn}
+                                onClick={() => {
+                                    setSelectedCt(btn);
+                                    setNewShop((prev) => {
+                                        return {
+                                            ...prev,
+                                            categoryName: btn,
+                                            categoryId: idx,
+                                        };
+                                    });
+                                }}
+                            >
+                                {btn}
+                            </MrkCtBut>
+                        ))}
+                    </Wrap2>
+                    <OkButton onClick={handleButton}>입력완료</OkButton>
+                </Wrap>
             )}
 
             {stage === 4 && (
-                <div>
-                    <button onClick={() => setBankSelect(true)}>
-                        {newShop.accountBank ? <div>{newShop.accountBank}</div> : <div>은행을 선택해주세요.</div>}
-                    </button>
-                    <Form onSubmit={handleButton}>
-                        <P1>판매자 본인의 계좌번호를 입력해주세요</P1>{' '}
+                <Wrap>
+                    <AccBox>
+                        <P1>판매자 본인의 계좌번호를 입력해주세요</P1>
                         <P2>상품을 주문하면, 고객에게 해당 계좌번호가 안내돼요.</P2>
+                        <SetMarketButton onClick={() => setBankSelect(true)}>
+                            {newShop.accountBank ? <div>{newShop.accountBank}</div> : <div>은행을 선택해주세요.</div>}
+                        </SetMarketButton>
                         <Input
                             type="text"
                             name="accountDigit"
@@ -300,19 +444,21 @@ const CreateShop = () => {
                             onChange={handleChange}
                             required
                         />
-                        <button type="submit">입력완료</button>
-                    </Form>
-                </div>
+                        <OkButton onClick={handleButton}>입력완료</OkButton>
+                    </AccBox>
+                </Wrap>
             )}
 
             {stage === 5 && (
-                <div>
+                <Wrap>
                     <P1>프로필 사진을 등록해주세요</P1>
                     <P2>가게명과 함께 고객에게 보여져요. 등록한 사진은 나중에 변경 가능해요.</P2>
-                    <img src={none} />
-                    <button>사진 등록</button>
-                    <button onClick={handleButton}>입력완료</button>
-                </div>
+                    <PhotoWrap>
+                        <PhotoImg src={none} />
+                        <PhotoButton>사진 등록</PhotoButton>
+                    </PhotoWrap>
+                    <OkButton onClick={handleButton}>입력완료</OkButton>
+                </Wrap>
             )}
         </Container>
     );

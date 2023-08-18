@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import back from '../../../imgs/Vector2.png';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSpeechRecognition } from 'react-speech-kit';
 import getvoice from '../../../imgs/getvoice.png';
+import { useRecoilState } from 'recoil';
+import accountState from '../../../store/atoms';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Container = styled.div`
     width: 100%;
@@ -73,13 +77,66 @@ const MicButton = styled.button`
 `;
 
 const VoiceModule = ({ func }) => {
-    const [value, setValue] = useState();
+    const [value, setValue] = useState('');
+    const navigate = useNavigate();
+    const [account, setAccount] = useRecoilState(accountState);
+    const [newStatus, setNewStatus] = useState(10);
 
+    const isFirstRender = useRef(true);
+
+    const [start, setStart] = useState(0);
     const { listen, listening, stop } = useSpeechRecognition({
         onResult: (result) => {
             setValue(result);
         },
     });
+
+    console.log(value);
+    console.log(listening);
+
+    useEffect(() => {
+        // 첫 렌더링 시 isFirstRender.current는 true이므로 API 호출을 방지한다.
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        // 상태값이 false로 변경될 때만 API를 호출한다.
+        if (!listening) {
+            const tmp = {
+                searchString: value,
+                userId: account.userId,
+            };
+            console.log(tmp);
+            axios
+                .post('https://ssudamda.shop/voice-recognition/recognizing', tmp)
+                .then((res) => {
+                    console.log(res.data);
+                    setNewStatus(res.data.statusCode);
+                    // if (res.data.statusCode === -1) {
+                    //     alert('내 가게가 없습니다!');
+                    // } else if (res.data.StatusCode === 0 || res.data.StatusCode === 1) {
+                    //     navigate('/myPage');
+                    // } else if (res.data.StatusCode === 2) {
+                    //     navigate('/myPage');
+                    // }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }, [listening]);
+
+    useEffect(() => {
+        console.log(newStatus);
+        if (newStatus === -1) {
+            alert('내 가게가 없습니다!');
+        } else if (newStatus === 0 || newStatus === 1) {
+            navigate('/myPage');
+        } else if (newStatus === 2) {
+            navigate('/myPage');
+        }
+    }, [newStatus]);
 
     return (
         <Container>

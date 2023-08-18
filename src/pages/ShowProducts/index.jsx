@@ -97,31 +97,33 @@ function ShowProducts() {
     const [data, setData] = useState([]);
 
     //선택한 상품
-    const [selected, setSelected] = useState({});
+    const [selected, setSelected] = useState();
 
     //파라미터로 전달해준 값 취득
     const location = useLocation();
-    const params = new URLSearchParams(location.search);
-    //쿼리 취득
-    const btnValue = params.get('productCategory');
-    const [selectedCt, setSelectedCt] = useState(btnValue);
+
+    const [selectedCt, setSelectedCt] = useState({
+        id: location.state.id,
+        name: location.state.name,
+    });
+
+    console.log(selectedCt);
 
     useEffect(() => {
         axios
             .get('https://ssudamda.shop/products/by-category', {
                 params: {
-                    categoryId: btnValue,
+                    categoryId: selectedCt.id + 1,
                     marketId: account.marketId,
                 },
             })
             .then((response) => {
-                setData([...response.data]);
+                setData(...response.data);
             })
             .catch((error) => {});
-    }, [btnValue]);
+    }, [selectedCt.id]);
 
     const buttons = [
-        '전체',
         '과일',
         '채소',
         '쌀·잡곡·견과',
@@ -172,13 +174,22 @@ function ShowProducts() {
                         <BackButton onClick={() => navigate('/mainHome')}>
                             <FontAwesomeIcon icon={faChevronLeft} />
                         </BackButton>
-                        <div>{selectedCt}</div>
+                        <div>{selectedCt.name}</div>
                         <div></div>
                     </Nav>
                     <MrkCt id="scroll-horizontal">
                         {/* <ScrollHorizontal> */}
                         {buttons.map((btn, idx) => (
-                            <MrkCtBut key={idx} isSelected={selectedCt === btn} onClick={() => setSelectedCt(btn)}>
+                            <MrkCtBut
+                                key={idx}
+                                isSelected={selectedCt.name === btn}
+                                onClick={() =>
+                                    setSelectedCt({
+                                        name: btn,
+                                        id: idx,
+                                    })
+                                }
+                            >
                                 {btn}
                             </MrkCtBut>
                         ))}
@@ -194,9 +205,9 @@ function ShowProducts() {
                                 }}
                             >
                                 <h2>{product.productName}</h2>
-                                <p>Price: {product.price}</p>
+                                <p>{product.price}</p>
 
-                                <p>Store: {product.storeName}</p>
+                                <p>{product.storeName}</p>
                                 <hr />
                             </button>
                         ))}

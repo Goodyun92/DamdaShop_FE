@@ -20,6 +20,7 @@ import SelectLocComp from '../../components/SelectLoc';
 import VoiceModule from './components/VoiceModule';
 import axios from 'axios';
 import Order from '../../components/Order';
+import govoice from '../../imgs/govoice.png';
 
 const Container = styled.div`
     margin-top: 10px;
@@ -123,7 +124,8 @@ const Mrk2 = styled.div`
 
 const MrkCt = styled.div`
     width: 100%;
-    height: 40px;
+    height: 70px;
+    display: flex;
     overflow-x: scroll;
     &::-webkit-scrollbar {
         display: none;
@@ -191,6 +193,9 @@ const PopProd = styled.div`
 const ProButton = styled.div`
     display: flex;
     flex-direction: column;
+    width: 116px;
+    height: 199px;
+    align-items: center;
 `;
 const ProImg = styled.img`
     width: 116px;
@@ -245,6 +250,8 @@ const VoiceButton = styled.button`
     position: fixed;
     top: 80%;
     left: 46%;
+    background-color: white;
+    border: none;
 `;
 
 const ShopButton = styled.button`
@@ -294,7 +301,11 @@ const ShopImg = styled.img`
     border-radius: 5px;
     margin-right: 16px;
 `;
-
+const VoiceImg = styled.img`
+    background-color: white;
+    border: none;
+    outline: none;
+`;
 const MainHome = () => {
     const [account, setAccount] = useRecoilState(accountState);
     const [selectedCt, setSelectedCt] = useState({
@@ -358,9 +369,9 @@ const MainHome = () => {
             });
     }, []);
 
-    const goProductCategory = (value) => {
-        navigate(`/showproducts?productCategory=${value}`);
-    };
+    // const goProductCategory = (value) => {
+    //     navigate(`/showproducts?productCategory=${value}`);
+    // };
 
     const goMarketCategory = (value) => {
         navigate(`/showMarkets?marketCategory=${value}`);
@@ -419,37 +430,109 @@ const MainHome = () => {
             </MyLocation>
             <CategoryProducts>
                 <Categorys>
-                    <Cbutton onClick={() => goProductCategory('과일')}>
+                    <Cbutton
+                        onClick={() =>
+                            navigate('/showProducts', {
+                                state: {
+                                    id: 0,
+                                    name: '과일',
+                                },
+                            })
+                        }
+                    >
                         <Icon src={apple} />
                         과일
                     </Cbutton>
-                    <Cbutton onClick={() => goProductCategory('채소')}>
+                    <Cbutton
+                        onClick={() =>
+                            navigate('/showProducts', {
+                                state: {
+                                    id: 1,
+                                    name: '채소',
+                                },
+                            })
+                        }
+                    >
                         <Icon src={carrot} />
                         채소
                     </Cbutton>
-                    <Cbutton onClick={() => goProductCategory('쌀·잡곡·견과')}>
+                    <Cbutton
+                        onClick={() =>
+                            navigate('/showProducts', {
+                                state: {
+                                    id: 2,
+                                    name: '쌀·잡곡·견과',
+                                },
+                            })
+                        }
+                    >
                         <Icon src={wheat} />
                         쌀·잡곡·견과
                     </Cbutton>
-                    <Cbutton onClick={() => goProductCategory('수산물·건해산')}>
+                    <Cbutton
+                        onClick={() =>
+                            navigate('/showProducts', {
+                                state: {
+                                    id: 3,
+                                    name: '수산물·건해산',
+                                },
+                            })
+                        }
+                    >
                         <Icon src={fish} />
                         수산물·건해산
                     </Cbutton>
                 </Categorys>
                 <Categorys>
-                    <Cbutton onClick={() => goProductCategory('정육·계란')}>
+                    <Cbutton
+                        onClick={() =>
+                            navigate('/showProducts', {
+                                state: {
+                                    id: 4,
+                                    name: '정육·계란',
+                                },
+                            })
+                        }
+                    >
                         <Icon src={pork} />
                         정육·계란
                     </Cbutton>
-                    <Cbutton onClick={() => goProductCategory('요리·간편식')}>
+                    <Cbutton
+                        onClick={() =>
+                            navigate('/showProducts', {
+                                state: {
+                                    id: 5,
+                                    name: '요리·간편식',
+                                },
+                            })
+                        }
+                    >
                         <Icon src={dish} />
                         요리·간편식
                     </Cbutton>
-                    <Cbutton onClick={() => goProductCategory('음료')}>
+                    <Cbutton
+                        onClick={() =>
+                            navigate('/showProducts', {
+                                state: {
+                                    id: 6,
+                                    name: '음료',
+                                },
+                            })
+                        }
+                    >
                         <Icon src={drink} />
                         음료
                     </Cbutton>
-                    <Cbutton onClick={() => goProductCategory('친환경·유기농')}>
+                    <Cbutton
+                        onClick={() =>
+                            navigate('/showProducts', {
+                                state: {
+                                    id: 7,
+                                    name: '친환경·유기농',
+                                },
+                            })
+                        }
+                    >
                         <Icon src={leaf} />
                         친환경·유기농
                     </Cbutton>
@@ -493,7 +576,18 @@ const MainHome = () => {
                 ))}
             </MrkList>
 
-            <MoreMrkButton onClick={() => goMarketCategory(selectedCt.id)}>상품 더보기</MoreMrkButton>
+            <MoreMrkButton
+                onClick={() =>
+                    navigate('/showMarkets', {
+                        state: {
+                            name: selectedCt.name,
+                            id: selectedCt.id,
+                        },
+                    })
+                }
+            >
+                상품 더보기
+            </MoreMrkButton>
 
             <Popu1>사람들이 많이 찾는</Popu1>
             <Popu2>
@@ -510,6 +604,7 @@ const MainHome = () => {
                             handleOpenModal();
                         }}
                     >
+                        <ShopImg src="" alt="상품 이미지`category${product.category.catgoryId}`" />
                         <ProName>{product.productName}</ProName>
                         <ProPrice>{product.price}원</ProPrice>
 
@@ -520,8 +615,7 @@ const MainHome = () => {
             </PopProd>
 
             <VoiceButton onClick={voiceModOpen}>
-                음성인식
-                {/* <img src={}/> */}
+                <VoiceImg src={govoice} />
             </VoiceButton>
 
             {selectMarket && (

@@ -10,12 +10,19 @@ import ScrollHorizontal from 'react-scroll-horizontal';
 
 const Container = styled.div`
     width: 100%;
+    display: flex;
+    flex-direction: column;
 `;
 const Nav = styled.div`
     margin: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+`;
+const Wrap = styled.div`
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
 `;
 const BackButton = styled.button`
     border: none;
@@ -60,16 +67,20 @@ const MyStamp = () => {
                 <Title>내 토큰 스탬프</Title>
                 <div>{data}</div>
             </Nav>
-            <div id="scroll-horizontal">
+            <Wrap id="scroll-horizontal">
                 {/* <ScrollHorizontal> */}
                 {data.map((item) => (
                     <div key={item}>
                         {/* Render your data here */}
-                        <p>{item}</p>
+                        {/* <p>{item}</p> */}
+                        <img
+
+                        // src={}
+                        />
                     </div>
                 ))}
                 {/* </ScrollHorizontal> */}
-            </div>
+            </Wrap>
         </Container>
     );
 };

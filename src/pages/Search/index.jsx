@@ -84,10 +84,58 @@ const RecBut = styled.button`
     border: 0.5px solid #e0e0e0;
 `;
 
+const ShopButton = styled.button`
+    width: 95%;
+    display: flex;
+    background-color: white;
+    border: none;
+    margin: 19px 17px;
+`;
+const ShopContents = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
+const Sc1 = styled.div`
+    font-family: 'pretendard';
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    letter-spacing: 0em;
+`;
+const Sc2 = styled.div`
+    font-family: 'pretendard';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    color: #909090;
+`;
+const Sc3 = styled.div`
+    width: 68px;
+    height: 15px;
+    padding: 3px 4px 3px 4px;
+    border-radius: 3px;
+    gap: 10px;
+    font-family: 'pretendard';
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: center;
+    background-color: #60996633;
+`;
+const ShopImg = styled.img`
+    width: 77px;
+    height: 77px;
+    border-radius: 5px;
+    margin-right: 16px;
+`;
+const PList = styled.div``;
 const Search = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useRecoilState(accountState);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState();
     const [searchResults, setSearchResults] = useState([]);
 
     const handleChange = (e) => {
@@ -160,13 +208,20 @@ const Search = () => {
                 ))}
                 {/* </ScrollHorizontal> */}
             </Recommend>
-            <div>
-                <h2>Search Results:</h2>
-                <ul>
-                    {searchResults.length > 0 &&
-                        searchResults.map((product) => <li key={product?.id}>{product?.name}</li>)}
-                </ul>
-            </div>
+            {searchResults.length > 0 && (
+                <PList>
+                    {searchResults.map((product, index) => (
+                        <ShopButton key={index}>
+                            <ShopImg src="" alt="가게 이미지`category${shops.category.catgoryId}`" />
+                            <ShopContents>
+                                <Sc1>{product.id}</Sc1>
+                                <Sc2>{product.name}</Sc2>
+                            </ShopContents>
+                            <hr />
+                        </ShopButton>
+                    ))}
+                </PList>
+            )}
         </Container>
     );
 };

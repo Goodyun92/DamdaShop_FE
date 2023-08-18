@@ -45,6 +45,47 @@ const SpButton = styled.button`
     border-bottom: #609966 solid ${(props) => (props.isSelected ? '2.5px' : '0px')};
 `;
 
+const Wrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+`;
+const ProImg = styled.div`
+    background-color: #909090;
+`;
+const ProName = styled.div`
+    font-family: 'pretendard';
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+`;
+const Content = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+const ProButton = styled.div`
+    display: flex;
+    gap: 10px;
+    margin-left: 25px;
+`;
+const ProPrice = styled.div`
+    font-family: 'pretendard';
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0em;
+`;
+const ProDate = styled.div`
+    font-family: 'pretendard';
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    color: #909090;
+`;
+
 const OrderHistory = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
@@ -91,21 +132,25 @@ const OrderHistory = () => {
                 </SpButton>
 
                 {data.length > 0 && (
-                    <div>
+                    <Wrap>
                         {data.map((pro, index) => (
-                            <button
+                            <ProButton
                                 key={index}
                                 onClick={() => {
                                     console.log(pro);
                                 }}
                             >
-                                <h2>{pro.productName}</h2>
-                                <p>{pro.orderPrice}</p>
-                                <p>{pro.orderDate}</p>
-                                <hr />
-                            </button>
+                                <ProImg
+                                // src={}
+                                ></ProImg>
+                                <Content>
+                                    <ProName>{pro.productName}</ProName>
+                                    <ProPrice>{pro.orderPrice}</ProPrice>
+                                    <ProDate>{pro.orderDate}</ProDate>
+                                </Content>
+                            </ProButton>
                         ))}
-                    </div>
+                    </Wrap>
                 )}
             </div>
         </Container>
