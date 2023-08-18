@@ -19,6 +19,7 @@ import OrderHistory from './pages/OrderHistory';
 import MyStamp from './pages/MyStamp';
 import AfterCreateShop from './pages/AfterCreateShop';
 
+//push
 //mypage 추가
 
 // const Container = styled.div`
