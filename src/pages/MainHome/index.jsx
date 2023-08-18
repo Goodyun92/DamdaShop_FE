@@ -122,7 +122,12 @@ const Mrk2 = styled.div`
 `;
 
 const MrkCt = styled.div`
-    height: 5em;
+    width: 100%;
+    height: 40px;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `;
 const MrkCtBut = styled.button`
     height: 26px;
@@ -179,7 +184,40 @@ const PopuG = styled.span`
 `;
 
 const PopProd = styled.div`
-    height: 5em;
+    display: flex;
+    gap: 10px;
+`;
+
+const ProButton = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+const ProImg = styled.img`
+    width: 116px;
+    height: 142px;
+    border-radius: 5px;
+`;
+const ProName = styled.div`
+    font-family: 'pretendard';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: -0.30000001192092896px;
+`;
+const ProPrice = styled.div`
+    font-family: 'pretendard';
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14px;
+    letter-spacing: -0.30000001192092896px;
+`;
+const ProStr = styled.div`
+    font-family: 'pretendard';
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: -0.30000001192092896px;
+    color: #909090;
 `;
 
 const ModalOverlay = styled.div`
@@ -209,11 +247,59 @@ const VoiceButton = styled.button`
     left: 46%;
 `;
 
+const ShopButton = styled.button`
+    width: 95%;
+    display: flex;
+    background-color: white;
+    border: none;
+    margin: 19px 17px;
+`;
+const ShopContents = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
+const Sc1 = styled.div`
+    font-family: 'pretendard';
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    letter-spacing: 0em;
+`;
+const Sc2 = styled.div`
+    font-family: 'pretendard';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    color: #909090;
+`;
+const Sc3 = styled.div`
+    width: 68px;
+    height: 15px;
+    padding: 3px 4px 3px 4px;
+    border-radius: 3px;
+    gap: 10px;
+    font-family: 'pretendard';
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: center;
+    background-color: #60996633;
+`;
+const ShopImg = styled.img`
+    width: 77px;
+    height: 77px;
+    border-radius: 5px;
+    margin-right: 16px;
+`;
+
 const MainHome = () => {
     const [account, setAccount] = useRecoilState(accountState);
     const [selectedCt, setSelectedCt] = useState({
         name: '과일',
-        id: 0,
+        id: 1,
     });
     const navigate = useNavigate();
 
@@ -374,12 +460,12 @@ const MainHome = () => {
                 <span>의 다양한 가게를 볼 수 있어요</span>
             </Mrk1>
             <Mrk2>카테고리별로 나눠 보여드릴게요</Mrk2>
-            <MrkCt id="scroll-horizontal">
+            <MrkCt>
                 {/* <ScrollHorizontal> */}
                 {buttons.map((btn, idx) => (
                     <MrkCtBut
                         key={idx}
-                        isSelected={selectedCt === idx}
+                        isSelected={selectedCt.id === idx}
                         onClick={() =>
                             setSelectedCt({
                                 id: idx,
@@ -395,12 +481,15 @@ const MainHome = () => {
 
             <MrkList>
                 {ctShops.map((shops, index) => (
-                    <button key={index} onClick={() => goShop(shops.storeId)}>
-                        <h2>{shops.storeName}</h2>
-                        <p>{shops.storeDescription}</p>
-                        <p>{selectedCt.name}</p>
+                    <ShopButton key={index} onClick={() => goShop(shops.storeId)}>
+                        <ShopImg src="" alt="가게 이미지`category${shops.category.catgoryId}`" />
+                        <ShopContents>
+                            <Sc1>{shops.storeName}</Sc1>
+                            <Sc2>{shops.storeDescription}</Sc2>
+                            <Sc3>{selectedCt.name}</Sc3>
+                        </ShopContents>
                         <hr />
-                    </button>
+                    </ShopButton>
                 ))}
             </MrkList>
 
@@ -414,19 +503,18 @@ const MainHome = () => {
             <PopProd id="scroll-horizontal">
                 {/* <ScrollHorizontal> */}
                 {oldProduct.map((product, index) => (
-                    <button
+                    <ProButton
                         key={index}
                         onClick={() => {
                             setSelected({ ...product });
                             handleOpenModal();
                         }}
                     >
-                        <h2>{product.productName}</h2>
-                        <p>Price: {product.price}</p>
+                        <ProName>{product.productName}</ProName>
+                        <ProPrice>{product.price}원</ProPrice>
 
-                        <p>Store: {product.store.storeName}</p>
-                        <hr />
-                    </button>
+                        <ProStr>{product.store.storeName}</ProStr>
+                    </ProButton>
                 ))}
                 {/* </ScrollHorizontal> */}
             </PopProd>

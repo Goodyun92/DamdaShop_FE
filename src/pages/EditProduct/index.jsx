@@ -17,7 +17,7 @@ const EditProduct = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useRecoilState(accountState);
     const location = useLocation();
-    const shopId = location.state.shopId;
+    const shopId = location.state.shopId.shopId;
     const [productData, setProductData] = useState({
         ...location.state.product,
     });
@@ -27,6 +27,9 @@ const EditProduct = () => {
     };
 
     const complete = () => {
+        const shopId = location.state.shopId.shopId;
+        console.log(shopId);
+
         axios
             .patch(`https://ssudamda.shop/products/update/${productData.productId}`, {
                 categoryId: productData.category.categoryId,
@@ -36,6 +39,7 @@ const EditProduct = () => {
                 stockQuantity: productData.stockQuantity,
             })
             .then(() => {
+                console.log(shopId);
                 navigate('shop', {
                     state: {
                         shopId: shopId,
@@ -45,6 +49,8 @@ const EditProduct = () => {
             })
             .catch();
     };
+
+    console.log(location);
 
     return (
         <Container>
