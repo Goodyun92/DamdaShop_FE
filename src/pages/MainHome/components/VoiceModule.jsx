@@ -81,6 +81,7 @@ const VoiceModule = ({ func }) => {
     const navigate = useNavigate();
     const [account, setAccount] = useRecoilState(accountState);
     const [newStatus, setNewStatus] = useState(10);
+    const [newString, setNewString] = useState('');
 
     const isFirstRender = useRef(true);
 
@@ -113,13 +114,7 @@ const VoiceModule = ({ func }) => {
                 .then((res) => {
                     console.log(res.data);
                     setNewStatus(res.data.statusCode);
-                    // if (res.data.statusCode === -1) {
-                    //     alert('내 가게가 없습니다!');
-                    // } else if (res.data.StatusCode === 0 || res.data.StatusCode === 1) {
-                    //     navigate('/myPage');
-                    // } else if (res.data.StatusCode === 2) {
-                    //     navigate('/myPage');
-                    // }
+                    setNewString(res.data.searchString);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -135,6 +130,9 @@ const VoiceModule = ({ func }) => {
             navigate('/myPage');
         } else if (newStatus === 2) {
             navigate('/myPage');
+        } else if (newStatus === 4) {
+            if (newString === '검색') navigate('/search');
+            else if (newString === '가게등록') navigate('/createShop');
         }
     }, [newStatus]);
 

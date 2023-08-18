@@ -7,35 +7,61 @@ const locationState = atom({
             name: '서울',
             fine: [
                 {
-                    name: '강동구',
+                    name: '관악구',
                     market: [
                         {
-                            name: '강동시장1',
+                            name: '관악중부시장',
                             Id: 1,
-                        },
-                        {
-                            name: '강동시장2',
-                            Id: 2,
-                        },
-                        {
-                            name: '강동시장3',
-                            Id: 3,
                         },
                     ],
                 },
                 {
-                    name: '강남구',
+                    name: '동작구',
                     market: [
                         {
-                            name: '강남시장1',
+                            name: '상도전통시장',
+                            Id: 2,
+                        },
+                    ],
+                },
+                {
+                    name: '마포구',
+                    market: [
+                        {
+                            name: '망원시장',
+                            Id: 3,
+                        },
+                    ],
+                },
+                // 다른 구 정보...
+            ],
+        },
+        {
+            name: '인천',
+            fine: [
+                {
+                    name: '부평구',
+                    market: [
+                        {
+                            name: '부평시장',
                             Id: 4,
                         },
+                    ],
+                },
+                {
+                    name: '계양구',
+                    market: [
                         {
-                            name: '강남시장2',
+                            name: '작전시장',
                             Id: 5,
                         },
+                    ],
+                },
+                {
+                    name: '미추홀구',
+                    market: [
                         {
-                            name: '강남시장3',
+                            name: '신기시장',
                             Id: 6,
                         },
                     ],
@@ -44,14 +70,77 @@ const locationState = atom({
             ],
         },
         {
-            name: '인천/경기',
+            name: '경기',
             fine: [
                 {
-                    name: '인천구',
+                    name: '분당구',
                     market: [
                         {
-                            name: '인천시장1',
+                            name: '돌마시장',
                             Id: 7,
+                        },
+                    ],
+                },
+                {
+                    name: '중원구',
+                    market: [
+                        {
+                            name: '성호시장',
+                            Id: 8,
+                        },
+                    ],
+                },
+                {
+                    name: '수정구',
+                    market: [
+                        {
+                            name: '중앙시장',
+                            Id: 9,
+                        },
+                    ],
+                },
+                {
+                    name: '장안구',
+                    market: [
+                        {
+                            name: '정자시장',
+                            Id: 10,
+                        },
+                    ],
+                },
+                {
+                    name: '영통구',
+                    market: [
+                        {
+                            name: '국제시장',
+                            Id: 11,
+                        },
+                    ],
+                },
+                {
+                    name: '권선구',
+                    market: [
+                        {
+                            name: '권선종합시장',
+                            Id: 12,
+                        },
+                    ],
+                },
+                {
+                    name: '만안구',
+                    market: [
+                        {
+                            name: '박달시장',
+                            Id: 13,
+                        },
+                    ],
+                },
+                {
+                    name: '동안구',
+                    market: [
+                        {
+                            name: '관양시장',
+                            Id: 14,
                         },
                     ],
                 },
@@ -62,11 +151,29 @@ const locationState = atom({
             name: '강원',
             fine: [
                 {
-                    name: '강원구',
+                    name: '횡성군',
                     market: [
                         {
-                            name: '강원시장1',
-                            Id: 8,
+                            name: '횡성전통시장',
+                            Id: 15,
+                        },
+                    ],
+                },
+                {
+                    name: '화천군',
+                    market: [
+                        {
+                            name: '화천시장',
+                            Id: 16,
+                        },
+                    ],
+                },
+                {
+                    name: '정선군',
+                    market: [
+                        {
+                            name: '정선아리랑시장',
+                            Id: 17,
                         },
                     ],
                 },
@@ -77,11 +184,11 @@ const locationState = atom({
             name: '대전/충남',
             fine: [
                 {
-                    name: '대전구',
+                    name: '예산군',
                     market: [
                         {
-                            name: '대전시장1',
-                            Id: 9,
+                            name: '예산시장',
+                            Id: 18,
                         },
                     ],
                 },
@@ -89,89 +196,14 @@ const locationState = atom({
             ],
         },
         {
-            name: '충북',
+            name: '부산',
             fine: [
                 {
-                    name: '충북구',
+                    name: '해운대구',
                     market: [
                         {
-                            name: '충북시장1',
-                            Id: 10,
-                        },
-                    ],
-                },
-                // 다른 구 정보...
-            ],
-        },
-        {
-            name: '광주/전남',
-            fine: [
-                {
-                    name: '광주구',
-                    market: [
-                        {
-                            name: '광주시장1',
-                            Id: 11,
-                        },
-                    ],
-                },
-                // 다른 구 정보...
-            ],
-        },
-        {
-            name: '전북',
-            fine: [
-                {
-                    name: '전북구',
-                    market: [
-                        {
-                            name: '전북시장1',
-                            Id: 12,
-                        },
-                    ],
-                },
-                // 다른 구 정보...
-            ],
-        },
-        {
-            name: '부산/경남',
-            fine: [
-                {
-                    name: '부산구',
-                    market: [
-                        {
-                            name: '부산시장1',
-                            Id: 13,
-                        },
-                    ],
-                },
-                // 다른 구 정보...
-            ],
-        },
-        {
-            name: '대구/경북',
-            fine: [
-                {
-                    name: '경북구',
-                    market: [
-                        {
-                            name: '경북시장1',
-                            Id: 14,
-                        },
-                    ],
-                },
-                // 다른 구 정보...
-            ],
-        },
-        {
-            name: '제주',
-            fine: [
-                {
-                    name: '제주구',
-                    market: [
-                        {
-                            name: '제주시장1',
-                            Id: 15,
+                            name: '해운대시장',
+                            Id: 19,
                         },
                     ],
                 },

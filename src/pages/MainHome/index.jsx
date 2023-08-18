@@ -21,6 +21,15 @@ import VoiceModule from './components/VoiceModule';
 import axios from 'axios';
 import Order from '../../components/Order';
 import govoice from '../../imgs/govoice.png';
+import category1 from '../../imgs/category1.png';
+import category2 from '../../imgs/category2.png';
+import category3 from '../../imgs/category3.png';
+import category4 from '../../imgs/category4.png';
+import category5 from '../../imgs/category5.png';
+import category6 from '../../imgs/category6.png';
+import category7 from '../../imgs/category7.png';
+import category8 from '../../imgs/category8.png';
+import shop1 from '../../imgs/shop1.png';
 
 const Container = styled.div`
     margin-top: 10px;
@@ -252,6 +261,7 @@ const VoiceButton = styled.button`
     left: 46%;
     background-color: white;
     border: none;
+    border-radius: 50%;
 `;
 
 const ShopButton = styled.button`
@@ -565,7 +575,7 @@ const MainHome = () => {
             <MrkList>
                 {ctShops.map((shops, index) => (
                     <ShopButton key={index} onClick={() => goShop(shops.storeId)}>
-                        <ShopImg src="" alt="가게 이미지`category${shops.category.catgoryId}`" />
+                        <ShopImg src={shop1} alt="가게 이미지`category${shops.category.catgoryId}`" />
                         <ShopContents>
                             <Sc1>{shops.storeName}</Sc1>
                             <Sc2>{shops.storeDescription}</Sc2>
@@ -604,7 +614,7 @@ const MainHome = () => {
                             handleOpenModal();
                         }}
                     >
-                        <ShopImg src="" alt="상품 이미지`category${product.category.catgoryId}`" />
+                        <ShopImg src={category1} alt="상품 이미지" />
                         <ProName>{product.productName}</ProName>
                         <ProPrice>{product.price}원</ProPrice>
 
@@ -614,7 +624,7 @@ const MainHome = () => {
                 {/* </ScrollHorizontal> */}
             </PopProd>
 
-            <VoiceButton onClick={voiceModOpen}>
+            <VoiceButton img onClick={voiceModOpen}>
                 <VoiceImg src={govoice} />
             </VoiceButton>
 
