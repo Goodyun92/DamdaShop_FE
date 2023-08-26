@@ -37,6 +37,7 @@ import shop5 from '../../imgs/shop5.png';
 import shop6 from '../../imgs/shop6.png';
 import shop7 from '../../imgs/shop7.png';
 import shop8 from '../../imgs/shop8.png';
+import logo from '../../imgs/logo.png';
 
 const Container = styled.div`
     margin-top: 10px;
@@ -50,8 +51,19 @@ const Container = styled.div`
 
 const TopNav = styled.nav`
     display: flex;
+    justify-content: space-between;
+    margin: 10px 10px 15px 10px;
+`;
+
+const NavRight = styled.div`
+    display: flex;
     justify-content: end;
-    margin: 10px;
+`;
+
+const Logo = styled.img`
+    margin-left: 6px;
+    width: 30px;
+    height: 30px;
 `;
 
 const MyLocation = styled.div`
@@ -427,8 +439,11 @@ const MainHome = () => {
     return (
         <Container>
             <TopNav>
-                <GoSearch />
-                <GoMypage />
+                <Logo src={logo} onClick={() => navigate('/mainHome')} />
+                <NavRight>
+                    <GoSearch />
+                    <GoMypage />
+                </NavRight>
             </TopNav>
             <MyLocation>
                 <Loc>
