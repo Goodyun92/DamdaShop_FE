@@ -43,6 +43,7 @@ const BackButton = styled.button`
 `;
 
 const MrkCt = styled.div`
+    margin-top: 15px;
     height: 2.5em;
     border-bottom: 0.5px solid #d0d0d0;
     display: flex;

@@ -8,6 +8,9 @@ import axios from 'axios';
 
 const Container = styled.div`
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 const Nav = styled.nav`
     display: flex;
@@ -24,9 +27,12 @@ const Nav = styled.nav`
 `;
 
 const NavTop = styled.div`
+    margin-top: 5px;
+    margin-left: 16px;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `;
 const BackButton = styled.button`
     background-color: white;
@@ -39,6 +45,8 @@ const NowBox = styled.div`
     align-items: center;
     justify-content: center;
     padding: 16px 20px;
+    margin-top: 15px;
+    margin-right: 15px;
 `;
 const NowDetail = styled.div`
     color: ${(props) => (props.isSelected ? '##333333' : '#909090')};
@@ -66,6 +74,7 @@ const SelButton = styled.button`
     flex-grow: 0;
     background-color: ${(props) => (props.isSelected ? 'rgba(96, 153, 102, 0.2)' : '#FFFFFF')};
     border: 0.5px solid;
+    border-radius: 2px;
     border-color: ${(props) => (props.isSelected ? '#609966' : '#B0B0B0')};
 `;
 
