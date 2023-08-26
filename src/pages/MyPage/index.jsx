@@ -22,6 +22,7 @@ import sh from '../../imgs/sh.png';
 import sin from '../../imgs/sin.png';
 import toss from '../../imgs/toss.png';
 import woori from '../../imgs/woori.png';
+import stamp1 from '../../imgs/stamp1.png';
 
 const Container = styled.div`
     width: 100%;
@@ -51,11 +52,12 @@ const Nav2 = styled.div`
     display: flex;
     justify-content: space-between;
 `;
-
+const StampContents = styled.div`
+    margin: 0px 21px;
+`;
 const Nav3 = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 0px 21px;
 `;
 const StampNav = styled.div`
     display: flex;
@@ -409,9 +411,29 @@ const ProDate = styled.div`
 `;
 
 const Wrap4 = styled.div`
-    margin-top: 50px;
+    /* margin-left: 15px;
+    margin-right: 15px; */
+    margin-top: 30px;
+    width: 100%;
+    height: 130px;
     display: flex;
-    flex-direction: column;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`;
+
+const Stamp = styled.button`
+    height: 100%;
+    width: auto;
+    margin: 0px 20px 0px 20px;
+    border: none;
+    background-color: white;
+`;
+
+const StampImg = styled.img`
+    height: 120px;
+    width: auto;
 `;
 
 const BButtons = styled.div`
@@ -599,7 +621,7 @@ const Mypage = () => {
         axios
             .get(`https://ssudamda.shop/users/${account.userId}/stamps`)
             .then((response) => {
-                setStamps([...response.data]);
+                setStamps(...response.data);
             })
             .catch((error) => {});
     }, []);
@@ -687,7 +709,7 @@ const Mypage = () => {
                         <MyName>사용자{account.name} 님</MyName>
                         <ProfileEditbutton onClick={() => setStage(2)}>프로필 수정하기</ProfileEditbutton>
                     </Nav2>
-                    <div>
+                    <StampContents>
                         <Nav3>
                             <StampNav>
                                 <MyStamp>내 토큰 스탬프</MyStamp>
@@ -697,18 +719,15 @@ const Mypage = () => {
                         <Wrap4 id="scroll-horizontal">
                             {/* <ScrollHorizontal> */}
                             {stamps.map((item) => (
-                                <div key={item}>
+                                <Stamp key={item}>
                                     {/* Render your data here */}
                                     {/* <p>{item}</p> */}
-                                    <img
-
-                                    // src={}
-                                    />
-                                </div>
+                                    <StampImg src={stamp1} />
+                                </Stamp>
                             ))}
                             {/* </ScrollHorizontal> */}
                         </Wrap4>
-                    </div>
+                    </StampContents>
                     <GoMyShop>내 가게 바로가기</GoMyShop>
                     {haveMyShop ? (
                         <MyShopBox>

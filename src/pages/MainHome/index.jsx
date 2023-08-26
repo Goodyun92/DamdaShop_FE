@@ -255,8 +255,6 @@ const ModalContent = styled.div`
     border-radius: 8px;
 `;
 
-const VoiceButton = styled.button``;
-
 const ShopButton = styled.button`
     width: 95%;
     display: flex;
@@ -305,14 +303,13 @@ const ShopImg = styled.img`
     margin-right: 16px;
 `;
 const VoiceImg = styled.img`
-    background-color: white;
     border: none;
     outline: none;
     position: fixed;
     top: 80%;
-    left: 46%;
-    background-color: white;
+    align-self: center;
 `;
+
 const MainHome = () => {
     const [account, setAccount] = useRecoilState(accountState);
     const [selectedCt, setSelectedCt] = useState({
@@ -598,7 +595,7 @@ const MainHome = () => {
 
             <Popu1>사람들이 많이 찾는</Popu1>
             <Popu2>
-                <PopuG>{account.marketId}의 인기상품</PopuG>
+                <PopuG>{account.marketLoc}의 인기상품</PopuG>
                 <span>이에요</span>
             </Popu2>
             <PopProd id="scroll-horizontal">
@@ -621,9 +618,7 @@ const MainHome = () => {
                 {/* </ScrollHorizontal> */}
             </PopProd>
 
-            {/* <VoiceButton > */}
             <VoiceImg onClick={voiceModOpen} src={govoice} />
-            {/* </VoiceButton> */}
 
             {selectMarket && (
                 <ModalOverlay onClick={selectMarketClose}>
