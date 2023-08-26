@@ -128,7 +128,9 @@ const SelectLoc = ({ func }) => {
                 func();
                 console.log(account);
             })
-            .catch((error) => {});
+            .catch((error) => {
+                func();
+            });
 
         // func(); //임시
     };
