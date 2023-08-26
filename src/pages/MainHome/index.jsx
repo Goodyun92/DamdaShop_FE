@@ -611,16 +611,16 @@ const MainHome = () => {
             </MrkList>
 
             <MoreMrkButton
-                onClick={() =>
-                    navigate('/showMarkets', {
-                        state: {
-                            name: selectedCt.name,
-                            id: selectedCt.id,
-                        },
-                    })
-                }
+            // onClick={() =>
+            //     navigate('/showMarkets', {
+            //         state: {
+            //             name: selectedCt.name,
+            //             id: selectedCt.id,
+            //         },
+            //     })
+            // }
             >
-                상품 더보기
+                가게 더보기
             </MoreMrkButton>
 
             <Popu1>사람들이 많이 찾는</Popu1>

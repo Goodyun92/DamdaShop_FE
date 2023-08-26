@@ -57,7 +57,7 @@ const Container = styled.div`
     /* background-color: beige; */
 `;
 const Nav = styled.div`
-    margin-left: 19px;
+    margin-left: 10px;
     margin-bottom: 18px;
 `;
 const BackButton = styled.button`

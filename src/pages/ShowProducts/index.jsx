@@ -10,10 +10,18 @@ import vector from '../../imgs/Vector.png';
 import Order from '../../components/Order';
 import { useRecoilState } from 'recoil';
 import accountState from '../../store/atoms';
+import category1 from '../../imgs/category1.png';
+import category2 from '../../imgs/category2.png';
+import category3 from '../../imgs/category3.png';
+import category4 from '../../imgs/category4.png';
+import category5 from '../../imgs/category5.png';
+import category6 from '../../imgs/category6.png';
+import category7 from '../../imgs/category7.png';
+import category8 from '../../imgs/category8.png';
 
 const Container = styled.div`
     width: 95%;
-    margin-top: 10px;
+    margin-top: 18px;
 `;
 
 const Nav = styled.nav`
@@ -37,6 +45,11 @@ const BackButton = styled.button`
 const MrkCt = styled.div`
     height: 2.5em;
     border-bottom: 0.5px solid #d0d0d0;
+    display: flex;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 const MrkCtBut = styled.button`
@@ -87,6 +100,57 @@ const ModalContent = styled.div`
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
+`;
+
+const Products = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-left: 20px;
+`;
+const ProButton = styled.button`
+    flex: 1 1 calc(50% - 10px);
+    flex-grow: 0;
+    border: none;
+    margin-bottom: 20px;
+    background-color: white;
+`;
+const ProName = styled.div`
+    font-family: 'pretendard';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: -0.30000001192092896px;
+    text-align: left;
+    margin-top: 2px;
+    margin-left: 2px;
+`;
+const ProPrice = styled.div`
+    font-family: 'pretendard';
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14px;
+    letter-spacing: -0.30000001192092896px;
+    text-align: left;
+    margin-top: 2px;
+    margin-left: 2px;
+`;
+const ProStr = styled.div`
+    font-family: 'pretendard';
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: -0.30000001192092896px;
+    color: #909090;
+    text-align: left;
+    margin-left: 2px;
+    margin-top: 2px;
+`;
+const ShopImg = styled.img`
+    width: 150px;
+    height: 198px;
+    border-radius: 5px;
 `;
 
 function ShowProducts() {
@@ -146,7 +210,7 @@ function ShowProducts() {
 
     return (
         <Container>
-            {isOrder ? (
+            {/* {isOrder ? (
                 <div>
                     <Nav>
                         <BackButton onClick={() => setIsOrder(false)}>
@@ -168,62 +232,72 @@ function ShowProducts() {
                         주문하기
                     </button>
                 </div>
-            ) : (
-                <div>
-                    <Nav>
-                        <BackButton onClick={() => navigate('/mainHome')}>
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                        </BackButton>
-                        <div>{selectedCt.name}</div>
-                        <div></div>
-                    </Nav>
-                    <MrkCt id="scroll-horizontal">
-                        {/* <ScrollHorizontal> */}
-                        {buttons.map((btn, idx) => (
-                            <MrkCtBut
-                                key={idx}
-                                isSelected={selectedCt.name === btn}
-                                onClick={() =>
-                                    setSelectedCt({
-                                        name: btn,
-                                        id: idx,
-                                    })
-                                }
-                            >
-                                {btn}
-                            </MrkCtBut>
-                        ))}
-                        {/* </ScrollHorizontal> */}
-                    </MrkCt>
-                    <div>
-                        {data.map((product, index) => (
-                            <button
-                                key={index}
-                                onClick={() => {
-                                    setSelected({ ...product });
-                                    setIsOrder(true);
-                                }}
-                            >
-                                <h2>{product.productName}</h2>
-                                <p>{product.price}</p>
+            ) : ( */}
+            <div>
+                <Nav>
+                    <BackButton onClick={() => navigate('/mainHome')}>
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </BackButton>
+                    <div>{selectedCt.name}</div>
+                    <div></div>
+                </Nav>
+                <MrkCt id="scroll-horizontal">
+                    {/* <ScrollHorizontal> */}
+                    {buttons.map((btn, idx) => (
+                        <MrkCtBut
+                            key={idx}
+                            isSelected={selectedCt.name === btn}
+                            onClick={() =>
+                                setSelectedCt({
+                                    name: btn,
+                                    id: idx,
+                                })
+                            }
+                        >
+                            {btn}
+                        </MrkCtBut>
+                    ))}
+                    {/* </ScrollHorizontal> */}
+                </MrkCt>
 
-                                <p>{product.storeName}</p>
-                                <hr />
-                            </button>
-                        ))}
-                    </div>
-                    <Purchase onClick={() => setIsOrder(true)}>
+                <Products>
+                    {data.map((product, index) => (
+                        <ProButton
+                            key={index}
+                            onClick={() => {
+                                setSelected({ ...product });
+                                // setIsOrder(true);
+                                handleOpenModal();
+                            }}
+                        >
+                            {product.category.catgoryId === 1 && <ShopImg src={category1} />}
+                            {product.category.catgoryId === 2 && <ShopImg src={category2} />}
+                            {product.category.catgoryId === 3 && <ShopImg src={category3} />}
+                            {product.category.catgoryId === 4 && <ShopImg src={category4} />}
+                            {product.category.catgoryId === 5 && <ShopImg src={category5} />}
+                            {product.category.catgoryId === 6 && <ShopImg src={category6} />}
+                            {product.category.catgoryId === 7 && <ShopImg src={category7} />}
+                            {product.category.catgoryId === 8 && <ShopImg src={category8} />}
+
+                            <ProStr>{product.store.storeName}</ProStr>
+                            <ProName>{product.productName}</ProName>
+                            <ProPrice>{product.price}원</ProPrice>
+                        </ProButton>
+                    ))}
+                </Products>
+
+                {/* <Purchase onClick={() => setIsOrder(true)}>
                         <img src={vector} />
-                    </Purchase>
-                    {showModal && (
-                        <ModalOverlay onClick={handleCloseModal}>
-                            <ModalContent onClick={(e) => e.stopPropagation()}>
-                                <Order product={selected} /*product 객체 전달*/ />
-                            </ModalContent>
-                        </ModalOverlay>
-                    )}
-                </div>
-            )}
+                    </Purchase> */}
+                {showModal && (
+                    <ModalOverlay onClick={handleCloseModal}>
+                        <ModalContent onClick={(e) => e.stopPropagation()}>
+                            <Order product={selected} /*product 객체 전달*/ />
+                        </ModalContent>
+                    </ModalOverlay>
+                )}
+            </div>
+            {/* )} */}
         </Container>
     );
 }

@@ -19,8 +19,9 @@ import category7 from '../../imgs/category7.png';
 import category8 from '../../imgs/category8.png';
 
 const Container = styled.div`
-    width: 100%;
+    width: 95%;
     margin-top: 30px;
+    padding: 0px 0px 0px 10px;
 `;
 
 const Nav = styled.div`
