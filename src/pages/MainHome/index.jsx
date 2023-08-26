@@ -30,6 +30,13 @@ import category6 from '../../imgs/category6.png';
 import category7 from '../../imgs/category7.png';
 import category8 from '../../imgs/category8.png';
 import shop1 from '../../imgs/shop1.png';
+import shop2 from '../../imgs/shop2.png';
+import shop3 from '../../imgs/shop3.png';
+import shop4 from '../../imgs/shop4.png';
+import shop5 from '../../imgs/shop5.png';
+import shop6 from '../../imgs/shop6.png';
+import shop7 from '../../imgs/shop7.png';
+import shop8 from '../../imgs/shop8.png';
 
 const Container = styled.div`
     margin-top: 10px;
@@ -569,7 +576,15 @@ const MainHome = () => {
             <MrkList>
                 {ctShops.map((shops, index) => (
                     <ShopButton key={index} onClick={() => goShop(shops.storeId)}>
-                        <ShopImg src={shop1} alt="가게 이미지`category${shops.category.catgoryId}`" />
+                        {shops.category.catgoryId === 1 && <ShopImg src={shop1} />}
+                        {shops.category.catgoryId === 2 && <ShopImg src={shop2} />}
+                        {shops.category.catgoryId === 3 && <ShopImg src={shop3} />}
+                        {shops.category.catgoryId === 4 && <ShopImg src={shop4} />}
+                        {shops.category.catgoryId === 5 && <ShopImg src={shop5} />}
+                        {shops.category.catgoryId === 6 && <ShopImg src={shop6} />}
+                        {shops.category.catgoryId === 7 && <ShopImg src={shop7} />}
+                        {shops.category.catgoryId === 8 && <ShopImg src={shop8} />}
+
                         <ShopContents>
                             <Sc1>{shops.storeName}</Sc1>
                             <Sc2>{shops.storeDescription}</Sc2>
@@ -608,7 +623,15 @@ const MainHome = () => {
                             handleOpenModal();
                         }}
                     >
-                        <ShopImg src={category1} alt="상품 이미지" />
+                        {product.category.catgoryId === 1 && <ShopImg src={category1} />}
+                        {product.category.catgoryId === 2 && <ShopImg src={category2} />}
+                        {product.category.catgoryId === 3 && <ShopImg src={category3} />}
+                        {product.category.catgoryId === 4 && <ShopImg src={category4} />}
+                        {product.category.catgoryId === 5 && <ShopImg src={category5} />}
+                        {product.category.catgoryId === 6 && <ShopImg src={category6} />}
+                        {product.category.catgoryId === 7 && <ShopImg src={category7} />}
+                        {product.category.catgoryId === 8 && <ShopImg src={category8} />}
+
                         <ProName>{product.productName}</ProName>
                         <ProPrice>{product.price}원</ProPrice>
 

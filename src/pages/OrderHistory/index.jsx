@@ -6,6 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState } from 'recoil';
 import accountState from '../../store/atoms';
+import category1 from '../../imgs/category1.png';
+import category2 from '../../imgs/category2.png';
+import category3 from '../../imgs/category3.png';
+import category4 from '../../imgs/category4.png';
+import category5 from '../../imgs/category5.png';
+import category6 from '../../imgs/category6.png';
+import category7 from '../../imgs/category7.png';
+import category8 from '../../imgs/category8.png';
 
 const Container = styled.div`
     width: 100%;
@@ -52,7 +60,10 @@ const Wrap = styled.div`
     padding: 10px;
 `;
 const ProImg = styled.div`
-    background-color: #909090;
+    width: 77px;
+    height: 77px;
+    border-radius: 5px;
+    margin-right: 16px;
 `;
 const ProName = styled.div`
     font-family: 'pretendard';
@@ -140,9 +151,16 @@ const OrderHistory = () => {
                                     console.log(pro);
                                 }}
                             >
-                                <ProImg
-                                // src={}
-                                ></ProImg>
+                                {/* <ProImg src={category1}></ProImg> */}
+                                {pro.category.catgoryId === 1 && <ProImg src={category1} />}
+                                {pro.category.catgoryId === 2 && <ProImg src={category2} />}
+                                {pro.category.catgoryId === 3 && <ProImg src={category3} />}
+                                {pro.category.catgoryId === 4 && <ProImg src={category4} />}
+                                {pro.category.catgoryId === 5 && <ProImg src={category5} />}
+                                {pro.category.catgoryId === 6 && <ProImg src={category6} />}
+                                {pro.category.catgoryId === 7 && <ProImg src={category7} />}
+                                {pro.category.catgoryId === 8 && <ProImg src={category8} />}
+
                                 <Content>
                                     <ProName>{pro.productName}</ProName>
                                     <ProPrice>{pro.orderPrice}</ProPrice>

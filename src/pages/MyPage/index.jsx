@@ -23,6 +23,32 @@ import sin from '../../imgs/sin.png';
 import toss from '../../imgs/toss.png';
 import woori from '../../imgs/woori.png';
 import stamp1 from '../../imgs/stamp1.png';
+import stamp2 from '../../imgs/stamp2.png';
+import stamp3 from '../../imgs/stamp3.png';
+import stamp4 from '../../imgs/stamp4.png';
+import stamp5 from '../../imgs/stamp5.png';
+import stamp6 from '../../imgs/stamp6.png';
+import stamp7 from '../../imgs/stamp7.png';
+import stamp8 from '../../imgs/stamp8.png';
+import stamp9 from '../../imgs/stamp9.png';
+import stamp10 from '../../imgs/stamp10.png';
+import stamp11 from '../../imgs/stamp11.png';
+import stamp12 from '../../imgs/stamp12.png';
+import stamp13 from '../../imgs/stamp13.png';
+import stamp14 from '../../imgs/stamp14.png';
+import stamp15 from '../../imgs/stamp15.png';
+import stamp16 from '../../imgs/stamp16.png';
+import stamp17 from '../../imgs/stamp17.png';
+import stamp18 from '../../imgs/stamp18.png';
+import stamp19 from '../../imgs/stamp19.png';
+import category1 from '../../imgs/category1.png';
+import category2 from '../../imgs/category2.png';
+import category3 from '../../imgs/category3.png';
+import category4 from '../../imgs/category4.png';
+import category5 from '../../imgs/category5.png';
+import category6 from '../../imgs/category6.png';
+import category7 from '../../imgs/category7.png';
+import category8 from '../../imgs/category8.png';
 
 const Container = styled.div`
     width: 100%;
@@ -376,7 +402,10 @@ const Wrap5 = styled.div`
     padding: 10px;
 `;
 const ProImg = styled.div`
-    background-color: #909090;
+    width: 77px;
+    height: 77px;
+    border-radius: 5px;
+    margin-right: 16px;
 `;
 const ProName = styled.div`
     font-family: 'pretendard';
@@ -722,7 +751,26 @@ const Mypage = () => {
                                 <Stamp key={item}>
                                     {/* Render your data here */}
                                     {/* <p>{item}</p> */}
-                                    <StampImg src={stamp1} />
+                                    {/* <StampImg src={stamp1} /> */}
+                                    {item === 1 && <StampImg src={stamp1} />}
+                                    {item === 2 && <StampImg src={stamp2} />}
+                                    {item === 3 && <StampImg src={stamp3} />}
+                                    {item === 4 && <StampImg src={stamp4} />}
+                                    {item === 5 && <StampImg src={stamp5} />}
+                                    {item === 6 && <StampImg src={stamp6} />}
+                                    {item === 7 && <StampImg src={stamp7} />}
+                                    {item === 8 && <StampImg src={stamp8} />}
+                                    {item === 9 && <StampImg src={stamp9} />}
+                                    {item === 10 && <StampImg src={stamp10} />}
+                                    {item === 11 && <StampImg src={stamp11} />}
+                                    {item === 12 && <StampImg src={stamp12} />}
+                                    {item === 13 && <StampImg src={stamp13} />}
+                                    {item === 14 && <StampImg src={stamp14} />}
+                                    {item === 15 && <StampImg src={stamp15} />}
+                                    {item === 16 && <StampImg src={stamp16} />}
+                                    {item === 17 && <StampImg src={stamp17} />}
+                                    {item === 18 && <StampImg src={stamp18} />}
+                                    {item === 19 && <StampImg src={stamp19} />}
                                 </Stamp>
                             ))}
                             {/* </ScrollHorizontal> */}
@@ -787,9 +835,18 @@ const Mypage = () => {
                                     console.log(pro);
                                 }}
                             >
-                                <ProImg
+                                {/* <ProImg
                                 // src={}
-                                ></ProImg>
+                                ></ProImg> */}
+
+                                {pro.category.catgoryId === 1 && <ProImg src={category1} />}
+                                {pro.category.catgoryId === 2 && <ProImg src={category2} />}
+                                {pro.category.catgoryId === 3 && <ProImg src={category3} />}
+                                {pro.category.catgoryId === 4 && <ProImg src={category4} />}
+                                {pro.category.catgoryId === 5 && <ProImg src={category5} />}
+                                {pro.category.catgoryId === 6 && <ProImg src={category6} />}
+                                {pro.category.catgoryId === 7 && <ProImg src={category7} />}
+                                {pro.category.catgoryId === 8 && <ProImg src={category8} />}
                                 <Content>
                                     <ProName>{pro.productName}</ProName>
                                     <ProPrice>{pro.orderPrice}</ProPrice>

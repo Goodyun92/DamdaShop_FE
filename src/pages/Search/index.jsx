@@ -9,6 +9,14 @@ import ScrollHorizontal from 'react-scroll-horizontal';
 import { useRecoilState } from 'recoil';
 import accountState from '../../store/atoms';
 import img1 from '../../imgs/category2.png';
+import category1 from '../../imgs/category1.png';
+import category2 from '../../imgs/category2.png';
+import category3 from '../../imgs/category3.png';
+import category4 from '../../imgs/category4.png';
+import category5 from '../../imgs/category5.png';
+import category6 from '../../imgs/category6.png';
+import category7 from '../../imgs/category7.png';
+import category8 from '../../imgs/category8.png';
 
 const Container = styled.div`
     width: 100%;
@@ -209,14 +217,25 @@ const Search = () => {
                 ))}
                 {/* </ScrollHorizontal> */}
             </Recommend>
+
             {searchResults.length > 0 && (
                 <PList>
                     {searchResults.map((product, index) => (
                         <ShopButton key={index}>
-                            <ShopImg src={img1} alt="가게 이미지`category${shops.category.catgoryId}`" />
+                            {/* <ShopImg src={img1} alt="가게 이미지`category${shops.category.catgoryId}`" /> */}
+
+                            {product.category.catgoryId === 1 && <ShopImg src={category1} />}
+                            {product.category.catgoryId === 2 && <ShopImg src={category2} />}
+                            {product.category.catgoryId === 3 && <ShopImg src={category3} />}
+                            {product.category.catgoryId === 4 && <ShopImg src={category4} />}
+                            {product.category.catgoryId === 5 && <ShopImg src={category5} />}
+                            {product.category.catgoryId === 6 && <ShopImg src={category6} />}
+                            {product.category.catgoryId === 7 && <ShopImg src={category7} />}
+                            {product.category.catgoryId === 8 && <ShopImg src={category8} />}
+
                             <ShopContents>
-                                <Sc1>{product.id}</Sc1>
-                                <Sc2>{product.name}</Sc2>
+                                <Sc1>{product.productName}</Sc1>
+                                <Sc2>{product.price}</Sc2>
                             </ShopContents>
                             <hr />
                         </ShopButton>
