@@ -51,14 +51,15 @@ const NowBox = styled.div`
 const NowDetail = styled.div`
     color: ${(props) => (props.isSelected ? '##333333' : '#909090')};
     font-family: 'pretendard';
-    font-size: ${(props) => (props.isSelected ? '14px' : '12px')};
-    font-weight: ${(props) => (props.isSelected ? 700 : 600)};
+    font-size: ${(props) => (props.isSelected ? '12px' : '10px')};
+    font-weight: ${(props) => (props.isSelected ? 600 : 500)};
     letter-spacing: 0em;
     text-align: center;
     margin: 15px 20px;
 `;
 
 const Contents = styled.div`
+    margin-top: 25px;
     width: 100%;
 `;
 
@@ -82,7 +83,7 @@ const FooterButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 106px 20px 23px 20px;
+    margin: 66px 20px 23px 20px;
     width: 100%;
     background-color: #609966;
     color: #ffffff;
