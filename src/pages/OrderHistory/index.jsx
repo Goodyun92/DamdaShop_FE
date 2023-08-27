@@ -37,7 +37,7 @@ const Nav = styled.div`
 `;
 
 const SpButton = styled.button`
-    margin: 0px 21px 16px 21px;
+    margin: 15px 21px 16px 21px;
     /* padding: 5px 9px 0px 9px; */
     /* border-radius: 20px; */
     white-space: nowrap;

@@ -58,8 +58,8 @@ const Input = styled.input`
     border-radius: 5px;
     border: 0.8px solid #505050;
     gap: 10px;
-    width: Fixed (334px);
-    height: Fixed (44px);
+    width: 334px;
+    height: 24px;
 
     padding: 8px 16px 8px 16px;
     border-radius: 5px;
@@ -97,12 +97,20 @@ const Wrap = styled.div`
     margin: 0px 10px;
 `;
 
-const Wrap2 = styled.div``;
+const Wrap2 = styled.div`
+    width: 100%;
+    height: 70px;
+    display: flex;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`;
 const SetMarketButton = styled.button`
     margin-top: 9px;
     margin-bottom: 10px;
-    width: Fixed (334px);
-    height: Fixed (50px);
+    width: 100%;
+    height: 35px;
     top: 236px;
     left: 20px;
     padding: 8px 16px 8px 16px;
@@ -134,7 +142,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-    width: 350px;
+    width: 335px;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -169,13 +177,15 @@ const BButtons = styled.div`
     margin-left: 6px;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 13px;
 `;
 const BankButton = styled.button`
+    flex: 1 1 calc(33.3333% - 10px);
+    flex-grow: 0;
     width: 105px;
     height: 72px;
     border-radius: 12px;
-    background-color: #f8f8f8;
+    border: 0.5px solid lightgray;
     font-family: 'pretendard';
     font-size: 12px;
     font-weight: 600;
@@ -222,7 +232,10 @@ const PhotoWrap = styled.div`
 const CreateShop = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useRecoilState(accountState);
-    const [selectedCt, setSelectedCt] = useState('');
+    const [selectedCt, setSelectedCt] = useState({
+        name: '과일',
+        id: 1,
+    });
     const buttons = [
         '과일',
         '채소',
@@ -238,7 +251,7 @@ const CreateShop = () => {
     const [bankSelect, setBankSelect] = useState(false);
     const [newShop, setNewShop] = useState({
         accountBank: '', //입력받기
-        accountDigit: 0, //입력받기
+        // accountDigit: , //입력받기
         categoryId: 1, //입력받기
         storeDescription: '',
         storeName: '', //입력받기
@@ -291,7 +304,7 @@ const CreateShop = () => {
 
     const handleBack = () => {
         console.log({ stage });
-        if (stage === 1) navigate('/mainHome');
+        if (stage === 1) navigate('/myPage');
         else setStage(stage - 1);
     };
 
@@ -394,7 +407,7 @@ const CreateShop = () => {
                 <Wrap>
                     <P1>내 가게가 속한 시장을 지정해주세요.</P1> <P2>고객이 지정한 시장명에 맞춰 가게가 표시돼요. </P2>
                     <div>시장</div>
-                    <SetMarketButton onClick={() => setMrkSelect(true)}>시장을 지정해주세요.</SetMarketButton>
+                    <SetMarketButton onClick={() => setMrkSelect(true)}>{account.marketLoc}</SetMarketButton>
                     <OkButton onClick={handleButton}>입력완료</OkButton>
                 </Wrap>
             )}
@@ -407,10 +420,13 @@ const CreateShop = () => {
                     <Wrap2>
                         {buttons.map((btn, idx) => (
                             <MrkCtBut
-                                key={btn}
-                                isSelected={selectedCt === btn}
+                                key={idx}
+                                isSelected={selectedCt.id === idx}
                                 onClick={() => {
-                                    setSelectedCt(btn);
+                                    setSelectedCt({
+                                        id: idx,
+                                        name: btn,
+                                    });
                                     setNewShop((prev) => {
                                         return {
                                             ...prev,

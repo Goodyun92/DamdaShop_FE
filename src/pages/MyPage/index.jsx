@@ -58,7 +58,10 @@ const Container = styled.div`
 `;
 const Nav = styled.div`
     margin-left: 10px;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;
 const BackButton = styled.button`
     background-color: white;
@@ -232,7 +235,7 @@ const NoShopButton = styled.button`
 `;
 
 const HistoryTitle = styled.div`
-    margin: 21px 16px;
+    margin: 40px 16px 21px 16px;
     font-family: 'pretendard';
     font-size: 18px;
     font-weight: 600;
@@ -269,6 +272,10 @@ const MoreHistoryButton = styled.button`
     letter-spacing: -0.30000001192092896px;
     text-align: center;
     color: black;
+`;
+
+const ProfileContainer = styled.div`
+    padding: 15px;
 `;
 
 const ProfileEditbutton = styled.button`
@@ -389,7 +396,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-    width: 100%;
+    width: 335px;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -859,7 +866,7 @@ const Mypage = () => {
                 </div>
             )}
             {stage === 2 && (
-                <div>
+                <ProfileContainer>
                     <Nav>
                         <FontAwesomeIcon onClick={goBack} icon={faChevronLeft} />
 
@@ -899,7 +906,7 @@ const Mypage = () => {
                             수정 완료
                         </ButtonChange>
                     </Wrap>
-                </div>
+                </ProfileContainer>
             )}
 
             {stage === 3 && (
