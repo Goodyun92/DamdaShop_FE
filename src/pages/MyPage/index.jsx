@@ -742,7 +742,7 @@ const Mypage = () => {
                         </BackButton>
                     </Nav>
                     <Nav2>
-                        <MyName>사용자{account.name} 님</MyName>
+                        <MyName>{account.name} 님</MyName>
                         <ProfileEditbutton onClick={() => setStage(2)}>프로필 수정하기</ProfileEditbutton>
                     </Nav2>
                     <StampContents>
